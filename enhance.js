@@ -17,6 +17,9 @@
     : ['عرض تجريبي للمنصة', 'معرفة الأسعار والباقات', 'تدريب موظفي منشأتي', 'استفسار عام'];
   var PURPOSE_PH = EN ? 'How can we help you?' : 'ما الذي يهمّك؟';
   var PURPOSE_LABEL = EN ? 'How can we help you?' : 'كيف نقدر نساعدك؟';
+  var OTHER_VAL = EN ? 'Other' : 'أخرى';
+  var NOTES_LABEL = EN ? 'Notes / your inquiry (optional)' : 'ملاحظات أو استفسارك (اختياري)';
+  var NOTES_PH = EN ? 'If you chose "Other", write your inquiry here...' : 'إذا اخترت "أخرى" اكتب استفسارك هنا...';
 
   function injectStyle() {
     if (document.getElementById('ax-enh-style')) return;
@@ -61,26 +64,45 @@
       phone.style.flex = '1 1 auto'; phone.style.width = 'auto'; phone.style.minWidth = '0';
     }
 
-    // Notes free-text -> clear purpose dropdown
+    // Free-text notes -> purpose dropdown (with "Other") + a notes box that appears on "Other"
     var notes = form.querySelector('textarea[name="notes"], textarea[name="message"]');
     if (notes) {
+      var fieldStyle = notes.getAttribute('style') || '';
       var ps = document.createElement('select');
-      ps.name = notes.getAttribute('name') || 'notes';
+      ps.name = 'purpose';
       ps.setAttribute('dir', EN ? 'ltr' : 'rtl');
-      ps.style.cssText = (notes.getAttribute('style') || '') + ';background:#fff;color:#2a3b38';
+      ps.style.cssText = fieldStyle + ';background:#fff;color:#2a3b38';
       var o0 = document.createElement('option');
       o0.value = ''; o0.textContent = PURPOSE_PH;
       ps.appendChild(o0);
       PURPOSES.forEach(function (t) {
         var o = document.createElement('option'); o.value = t; o.textContent = t; ps.appendChild(o);
       });
+      var oOther = document.createElement('option');
+      oOther.value = OTHER_VAL; oOther.textContent = OTHER_VAL;
+      ps.appendChild(oOther);
+
+      var purposeLabel = notes.closest('label');
       notes.parentNode.replaceChild(ps, notes);
-      var lab = ps.closest('label');
-      if (lab) {
-        for (var i = 0; i < lab.childNodes.length; i++) {
-          var n = lab.childNodes[i];
+      if (purposeLabel) {
+        for (var i = 0; i < purposeLabel.childNodes.length; i++) {
+          var n = purposeLabel.childNodes[i];
           if (n.nodeType === 3 && n.nodeValue.trim()) { n.nodeValue = PURPOSE_LABEL; break; }
         }
+      }
+
+      // notes box, hidden until "Other" is chosen
+      var noteLabel = document.createElement('label');
+      noteLabel.style.cssText = (purposeLabel && purposeLabel.getAttribute('style')) || 'display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:#2a3b38';
+      noteLabel.appendChild(document.createTextNode(NOTES_LABEL));
+      var ta = document.createElement('textarea');
+      ta.name = 'notes'; ta.rows = 3;
+      ta.setAttribute('placeholder', NOTES_PH);
+      ta.setAttribute('dir', EN ? 'ltr' : 'rtl');
+      ta.style.cssText = fieldStyle;
+      noteLabel.appendChild(ta);
+      if (purposeLabel && purposeLabel.parentNode) {
+        purposeLabel.parentNode.insertBefore(noteLabel, purposeLabel.nextSibling);
       }
     }
   }
