@@ -78,7 +78,7 @@
     s.textContent =
       '[data-axdetail]{transition:transform .2s ease,box-shadow .2s ease;}' +
       '[data-axdetail]:hover{transform:translateY(-4px);}' +
-      '.ax-learn{display:block;margin-top:10px;color:#0a7e8f;font-weight:700;font-size:13px;}' +
+      '.ax-learn{display:block;padding:0 20px 18px;margin-top:-14px;color:#0a7e8f;font-weight:700;font-size:13px;text-align:start;}' +
       '#ax-modal{opacity:0;transition:opacity .2s ease;}' +
       '#ax-modal.ax-open{opacity:1;}' +
       '#ax-modal-box{transform:translateY(14px) scale(.98);transition:transform .28s ease;}' +
@@ -296,12 +296,8 @@
         var src = slot ? (slot.getAttribute('src') || slot.src || '') : '';
         if (src) card.setAttribute('data-aximg', src);
         if (!card.querySelector('.ax-learn')) {
-          var labelEl = null, kids = card.querySelectorAll('div,span');
-          for (var j = 0; j < kids.length; j++) {
-            if (kids[j].children.length === 0 && kids[j].textContent.trim().indexOf(key) >= 0) { labelEl = kids[j]; break; }
-          }
           var lm = document.createElement('span'); lm.className = 'ax-learn'; lm.textContent = LEARN;
-          (labelEl ? labelEl.parentElement : card).appendChild(lm);
+          card.appendChild(lm);
         }
       });
     }
