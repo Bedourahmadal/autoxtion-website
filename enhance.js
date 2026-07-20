@@ -26,6 +26,7 @@
       '@media(max-width:860px){' +
       '.ax-plat-img{order:-1 !important;margin-bottom:6px;}' +
       '.ax-hiw-cell{min-height:150px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;}' +
+      '.ax-why-row{justify-content:center !important;}' +
       '}';
     document.head.appendChild(s);
   }
@@ -118,12 +119,29 @@
     }
   }
 
+  function fixWhyChoose() {
+    var sec = findSection(/لماذا تختار|Why Choose/i);
+    if (!sec) return;
+    var all = sec.querySelectorAll('*'), fr = null;
+    for (var j = 0; j < all.length; j++) {
+      var cs = getComputedStyle(all[j]);
+      if (cs.display === 'flex' && all[j].children.length === 2 && all[j].querySelector('image-slot,img')) { fr = all[j]; break; }
+    }
+    if (!fr || fr.dataset.axwhy) return;
+    fr.dataset.axwhy = '1';
+    fr.classList.add('ax-why-row');
+    for (var c = 0; c < fr.children.length; c++) {
+      if (fr.children[c].querySelector('image-slot,img')) { fr.children[c].classList.add('ax-why-img'); break; }
+    }
+  }
+
   function run() {
     injectStyle();
     var f = document.querySelector('form');
     if (f) enhanceForm(f);
     fixHowItWorks();
     fixPlatform();
+    fixWhyChoose();
   }
 
   var t = null;
