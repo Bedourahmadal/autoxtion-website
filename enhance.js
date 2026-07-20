@@ -13,8 +13,8 @@
     ['+1','🇺🇸']
   ];
   var PURPOSES = EN
-    ? ['Platform demo', 'Pricing & packages', 'Training for my organization', 'Partnership / reseller', 'General inquiry']
-    : ['عرض تجريبي للمنصة', 'معرفة الأسعار والباقات', 'تدريب موظفي منشأتي', 'شراكة أو توزيع', 'استفسار عام'];
+    ? ['Platform demo', 'Pricing & packages', 'Training for my organization', 'General inquiry']
+    : ['عرض تجريبي للمنصة', 'معرفة الأسعار والباقات', 'تدريب موظفي منشأتي', 'استفسار عام'];
   var PURPOSE_PH = EN ? 'How can we help you?' : 'ما الذي يهمّك؟';
   var PURPOSE_LABEL = EN ? 'How can we help you?' : 'كيف نقدر نساعدك؟';
 
@@ -25,8 +25,10 @@
     s.textContent =
       '@media(max-width:860px){' +
       '.ax-plat-img{order:-1 !important;margin-bottom:6px;}' +
-      '.ax-hiw-cell{min-height:150px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;}' +
       '.ax-why-row{justify-content:center !important;}' +
+      '.ax-hiw-grid{grid-template-columns:1fr !important;gap:10px !important;max-width:420px !important;margin-left:auto !important;margin-right:auto !important;}' +
+      '.ax-hiw-cell{min-height:auto !important;display:flex !important;flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:16px !important;text-align:start !important;padding:10px 10px !important;}' +
+      '.ax-hiw-cell>div:first-child{margin:0 !important;flex:0 0 auto !important;}' +
       '}';
     document.head.appendChild(s);
   }
@@ -101,6 +103,7 @@
     }
     if (!grid || grid.dataset.axhiw) return;
     grid.dataset.axhiw = '1';
+    grid.classList.add('ax-hiw-grid');
     for (var k = 0; k < grid.children.length; k++) grid.children[k].classList.add('ax-hiw-cell');
   }
 
