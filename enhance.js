@@ -45,9 +45,29 @@
     "إجراءات السلامة": "ترسيخ ثقافة السلامة عبر التدرّب على البروتوكولات والإجراءات الوقائية في بيئة العمل.",
     "خدمة العملاء": "تدريب الموظفين على مهارات خدمة العملاء والتواصل الاحترافي والتعامل مع المواقف المختلفة بكفاءة."
   };
-  var VALUE = EN
-    ? ['Immersive, realistic simulation', 'Instant AI-based assessment', 'Detailed performance reports']
-    : ['محاكاة واقعية غامرة', 'تقييم فوري بالذكاء الاصطناعي', 'تقارير أداء تفصيلية'];
+  var BULLETS = EN ? {
+    "Fuel Stations": ['Safe fuel and product handling', 'Fire and explosion prevention', 'Emergency and evacuation procedures'],
+    "Oil & Gas": ['Critical field and refinery operations', 'Operational safety protocols', 'Response to gas leaks and fires'],
+    "Energy": ['Operating and maintaining vital equipment', 'Operational risk management', 'Higher readiness and efficiency'],
+    "Private Sector": ['Flexible programs by facility size', 'Scenarios tailored to your business', 'Per-employee performance reports'],
+    "Firefighting": ['Identifying fire types', 'Using extinguishers and equipment', 'Safe evacuation and containment'],
+    "Pump operation": ['Safely starting and stopping pumps', 'Detecting common faults', 'Preventive maintenance procedures'],
+    "Tank handling": ['Inspecting and monitoring tanks', 'Safe filling and unloading', 'Leak prevention'],
+    "Fuel leak": ['Early leak detection', 'Rapid containment', 'Environmental safety procedures'],
+    "Safety procedures": ['Daily safety protocols', 'Using protective equipment', 'Reporting hazards'],
+    "Customer service": ['Professional communication', 'Handling complaints', 'Managing difficult situations']
+  } : {
+    "محطات الوقود": ['التعامل الآمن مع الوقود والمشتقات', 'الوقاية من الحرائق والانفجارات', 'إجراءات الطوارئ والإخلاء'],
+    "النفط والغاز": ['العمليات الحرجة في الحقول والمصافي', 'بروتوكولات السلامة التشغيلية', 'الاستجابة لتسرّبات الغاز والحرائق'],
+    "الطاقة": ['تشغيل وصيانة المعدات الحيوية', 'إدارة المخاطر التشغيلية', 'رفع الجاهزية والكفاءة'],
+    "القطاع الخاص": ['برامج مرنة حسب حجم المنشأة', 'سيناريوهات مخصّصة لنشاطكم', 'تقارير أداء لكل موظف'],
+    "مكافحة الحرائق": ['التعرّف على أنواع الحرائق', 'استخدام الطفايات ومعدات الإطفاء', 'الإخلاء الآمن والاحتواء'],
+    "تشغيل المضخات": ['بدء وإيقاف المضخات بأمان', 'اكتشاف الأعطال الشائعة', 'إجراءات الصيانة الوقائية'],
+    "التعامل مع الخزانات": ['فحص ومراقبة الخزانات', 'التعبئة والتفريغ الآمن', 'الوقاية من التسرّب'],
+    "تسرب الوقود": ['الكشف المبكر عن التسرّب', 'الاحتواء السريع', 'إجراءات السلامة البيئية'],
+    "إجراءات السلامة": ['بروتوكولات السلامة اليومية', 'استخدام معدات الحماية', 'التبليغ عن المخاطر'],
+    "خدمة العملاء": ['التواصل الاحترافي', 'التعامل مع الشكاوى', 'إدارة المواقف الصعبة']
+  };
   var LEARN = EN ? 'Learn more →' : 'اعرف أكثر ←';
   var WA_PREFIX = EN ? "Hello, I'd like to know more about: " : 'مرحبًا، أرغب بمعرفة المزيد عن: ';
 
@@ -249,7 +269,7 @@
     if (img) { im.src = img; im.style.display = 'block'; } else { im.style.display = 'none'; }
     var ul = ov.querySelector('#ax-modal-list');
     ul.innerHTML = '';
-    VALUE.forEach(function (v) {
+    (BULLETS[t] || []).forEach(function (v) {
       var li = document.createElement('li');
       li.style.cssText = 'display:flex;gap:9px;align-items:center;font-size:14px;color:#22322f';
       var ck = document.createElement('span'); ck.textContent = '✓'; ck.style.cssText = 'color:#0a7e8f;font-weight:800;flex:none';
