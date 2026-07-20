@@ -32,7 +32,7 @@
     "Tank handling": "Training on safe procedures for handling fuel tanks, inspection, and preventive maintenance.",
     "Fuel leak": "Simulation of fuel-leak situations with practice on rapid containment and environmental safety procedures.",
     "Safety procedures": "Building a strong safety culture through practice on protocols and preventive procedures in the workplace.",
-    "Using fire equipment": "Hands-on training on the correct use of firefighting equipment and tools across different situations."
+    "Customer service": "Training staff on customer-service skills, professional communication, and handling different situations efficiently."
   } : {
     "محطات الوقود": "نُدرّب فرق محطات الوقود على التعامل الآمن مع الوقود، والوقاية من الحرائق، وإجراءات الطوارئ عبر محاكاة واقعية ترفع الجاهزية وتقلّل الحوادث.",
     "النفط والغاز": "برامج محاكاة متقدمة لمنشآت النفط والغاز تغطّي العمليات الحرجة والسلامة التشغيلية والاستجابة للطوارئ في بيئة افتراضية آمنة تمامًا.",
@@ -43,20 +43,38 @@
     "التعامل مع الخزانات": "تدريب على الإجراءات الآمنة للتعامل مع خزانات الوقود، والفحص، والصيانة الوقائية.",
     "تسرب الوقود": "محاكاة حالات تسرّب الوقود والتدرّب على الاحتواء السريع وإجراءات السلامة البيئية.",
     "إجراءات السلامة": "ترسيخ ثقافة السلامة عبر التدرّب على البروتوكولات والإجراءات الوقائية في بيئة العمل.",
-    "استخدام معدات الإطفاء": "تدريب عملي على الاستخدام الصحيح لمعدات ووسائل الإطفاء في مختلف المواقف."
+    "خدمة العملاء": "تدريب الموظفين على مهارات خدمة العملاء والتواصل الاحترافي والتعامل مع المواقف المختلفة بكفاءة."
   };
+  var VALUE = EN
+    ? ['Immersive, realistic simulation', 'Instant AI-based assessment', 'Detailed performance reports']
+    : ['محاكاة واقعية غامرة', 'تقييم فوري بالذكاء الاصطناعي', 'تقارير أداء تفصيلية'];
+  var LEARN = EN ? 'Learn more →' : 'اعرف أكثر ←';
+  var WA_PREFIX = EN ? "Hello, I'd like to know more about: " : 'مرحبًا، أرغب بمعرفة المزيد عن: ';
 
   function injectStyle() {
     if (document.getElementById('ax-enh-style')) return;
     var s = document.createElement('style');
     s.id = 'ax-enh-style';
     s.textContent =
+      '[data-axdetail]{transition:transform .2s ease,box-shadow .2s ease;}' +
+      '[data-axdetail]:hover{transform:translateY(-4px);}' +
+      '.ax-learn{display:block;margin-top:10px;color:#0a7e8f;font-weight:700;font-size:13px;}' +
+      '#ax-modal{opacity:0;transition:opacity .2s ease;}' +
+      '#ax-modal.ax-open{opacity:1;}' +
+      '#ax-modal-box{transform:translateY(14px) scale(.98);transition:transform .28s ease;}' +
+      '#ax-modal.ax-open #ax-modal-box{transform:none;}' +
+      '#ax-modal-wa:hover,#ax-modal-cta:hover{filter:brightness(1.07);}' +
       '@media(max-width:860px){' +
       '.ax-plat-img{order:-1 !important;margin-bottom:6px;}' +
       '.ax-why-row{justify-content:center !important;}' +
       '.ax-hiw-grid{grid-template-columns:1fr !important;gap:10px !important;max-width:420px !important;margin-left:auto !important;margin-right:auto !important;}' +
       '.ax-hiw-cell{min-height:auto !important;display:flex !important;flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:16px !important;text-align:start !important;padding:10px 10px !important;}' +
       '.ax-hiw-cell>div:first-child{margin:0 !important;flex:0 0 auto !important;}' +
+      '}' +
+      '@media(max-width:600px){' +
+      '#ax-modal{align-items:flex-end !important;padding:0 !important;}' +
+      '#ax-modal-box{max-width:100% !important;border-radius:20px 20px 0 0 !important;transform:translateY(100%) scale(1) !important;transition:transform .3s ease !important;max-height:88vh;overflow-y:auto;}' +
+      '#ax-modal.ax-open #ax-modal-box{transform:translateY(0) !important;}' +
       '}';
     document.head.appendChild(s);
   }
@@ -192,42 +210,55 @@
     ov.id = 'ax-modal';
     ov.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(10,30,28,.55);display:none;align-items:center;justify-content:center;padding:20px;font-family:inherit';
     var box = document.createElement('div');
+    box.id = 'ax-modal-box';
     box.setAttribute('dir', EN ? 'ltr' : 'rtl');
-    box.style.cssText = 'background:#fff;max-width:460px;width:100%;border-radius:18px;padding:28px 24px 24px;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;text-align:' + (EN ? 'left' : 'right');
-    var x = document.createElement('button');
-    x.innerHTML = '&times;';
-    x.setAttribute('aria-label', 'close');
-    x.style.cssText = 'position:absolute;top:14px;' + (EN ? 'right' : 'left') + ':14px;border:none;background:#f2f5f4;width:32px;height:32px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer;color:#2a3b38';
-    var title = document.createElement('h3');
-    title.id = 'ax-modal-title';
-    title.style.cssText = 'margin:0 0 12px;font-size:20px;font-weight:800;color:#0a7e8f';
-    var desc = document.createElement('p');
-    desc.id = 'ax-modal-desc';
-    desc.style.cssText = 'margin:0 0 22px;font-size:15px;line-height:1.85;color:#3a4d4a';
-    var cta = document.createElement('a');
-    cta.textContent = EN ? 'Request a demo' : 'اطلب عرضًا';
-    cta.style.cssText = 'display:inline-block;background:#0a7e8f;color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer';
-    box.appendChild(x); box.appendChild(title); box.appendChild(desc); box.appendChild(cta);
+    box.style.cssText = 'background:#fff;max-width:470px;width:100%;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;text-align:' + (EN ? 'left' : 'right');
+    box.innerHTML =
+      '<img id="ax-modal-img" alt="" style="width:100%;height:170px;object-fit:cover;display:none">' +
+      '<button id="ax-modal-x" aria-label="close" style="position:absolute;top:12px;' + (EN ? 'right' : 'left') + ':12px;border:none;background:rgba(255,255,255,.92);width:34px;height:34px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer;color:#2a3b38;box-shadow:0 2px 8px rgba(0,0,0,.15)">&times;</button>' +
+      '<div style="padding:22px 24px 24px">' +
+        '<h3 id="ax-modal-title" style="margin:0 0 10px;font-size:20px;font-weight:800;color:#0a7e8f"></h3>' +
+        '<p id="ax-modal-desc" style="margin:0 0 16px;font-size:15px;line-height:1.85;color:#3a4d4a"></p>' +
+        '<ul id="ax-modal-list" style="list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:9px"></ul>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap">' +
+          '<a id="ax-modal-cta" style="flex:1 1 130px;text-align:center;background:#0a7e8f;color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer">' + (EN ? 'Request a demo' : 'اطلب عرضًا') + '</a>' +
+          '<a id="ax-modal-wa" target="_blank" rel="noopener noreferrer" style="flex:1 1 110px;text-align:center;background:#25D366;color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700;font-size:14px">' + (EN ? 'WhatsApp' : 'واتساب') + '</a>' +
+        '</div>' +
+      '</div>';
     ov.appendChild(box);
     document.documentElement.appendChild(ov);
-    function close() { ov.style.display = 'none'; }
-    x.onclick = close;
+    function close() { ov.classList.remove('ax-open'); setTimeout(function () { ov.style.display = 'none'; }, 260); }
+    ov.__close = close;
+    box.querySelector('#ax-modal-x').onclick = close;
     ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
-    cta.onclick = function () {
+    box.querySelector('#ax-modal-cta').onclick = function () {
       close();
       var demo = [].slice.call(document.querySelectorAll('a,button')).filter(function (b) { return /اطلب عرض|Request a Demo/i.test(b.textContent); })[0];
-      if (demo) demo.click();
+      if (demo) setTimeout(function () { demo.click(); }, 280);
     };
     return ov;
   }
 
-  function openDetail(t) {
+  function openDetail(t, img) {
     var d = DETAILS[t];
     if (!d) return;
     var ov = buildModal();
     ov.querySelector('#ax-modal-title').textContent = t;
     ov.querySelector('#ax-modal-desc').textContent = d;
+    var im = ov.querySelector('#ax-modal-img');
+    if (img) { im.src = img; im.style.display = 'block'; } else { im.style.display = 'none'; }
+    var ul = ov.querySelector('#ax-modal-list');
+    ul.innerHTML = '';
+    VALUE.forEach(function (v) {
+      var li = document.createElement('li');
+      li.style.cssText = 'display:flex;gap:9px;align-items:center;font-size:14px;color:#22322f';
+      var ck = document.createElement('span'); ck.textContent = '✓'; ck.style.cssText = 'color:#0a7e8f;font-weight:800;flex:none';
+      var sp = document.createElement('span'); sp.textContent = v;
+      li.appendChild(ck); li.appendChild(sp); ul.appendChild(li);
+    });
+    ov.querySelector('#ax-modal-wa').href = 'https://wa.me/966562356520?text=' + encodeURIComponent(WA_PREFIX + t);
     ov.style.display = 'flex';
+    setTimeout(function () { ov.classList.add('ax-open'); }, 10);
   }
 
   function tagClickables() {
@@ -238,7 +269,20 @@
       [].slice.call(ssec.querySelectorAll('.ax-card')).forEach(function (card) {
         var txt = (card.textContent || '').replace(/\s+/g, ' ').trim();
         var key = Object.keys(DETAILS).filter(function (k) { return txt.indexOf(k) >= 0; })[0];
-        if (key) { card.setAttribute('data-axdetail', key); card.style.cursor = 'pointer'; }
+        if (!key) return;
+        card.setAttribute('data-axdetail', key);
+        card.style.cursor = 'pointer';
+        var slot = card.querySelector('image-slot,img');
+        var src = slot ? (slot.getAttribute('src') || slot.src || '') : '';
+        if (src) card.setAttribute('data-aximg', src);
+        if (!card.querySelector('.ax-learn')) {
+          var labelEl = null, kids = card.querySelectorAll('div,span');
+          for (var j = 0; j < kids.length; j++) {
+            if (kids[j].children.length === 0 && kids[j].textContent.trim().indexOf(key) >= 0) { labelEl = kids[j]; break; }
+          }
+          var lm = document.createElement('span'); lm.className = 'ax-learn'; lm.textContent = LEARN;
+          (labelEl ? labelEl.parentElement : card).appendChild(lm);
+        }
       });
     }
     // Scenario cards
@@ -263,8 +307,19 @@
     window.__axClickBound = 1;
     document.addEventListener('click', function (e) {
       var t = e.target.closest && e.target.closest('[data-axdetail]');
-      if (t) { e.preventDefault(); e.stopPropagation(); openDetail(t.getAttribute('data-axdetail')); }
+      if (t) {
+        e.preventDefault(); e.stopPropagation();
+        var slot = t.querySelector('image-slot,img');
+        var img = slot ? (slot.getAttribute('src') || slot.src || '') : '';
+        openDetail(t.getAttribute('data-axdetail'), img);
+      }
     }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        var m = document.getElementById('ax-modal');
+        if (m && m.__close && getComputedStyle(m).display !== 'none') m.__close();
+      }
+    });
   }
 
   function run() {
