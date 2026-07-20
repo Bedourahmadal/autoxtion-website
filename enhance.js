@@ -21,6 +21,31 @@
   var NOTES_LABEL = EN ? 'Notes / your inquiry (optional)' : 'ملاحظات أو استفسارك (اختياري)';
   var NOTES_PH = EN ? 'If you chose "Other", write your inquiry here...' : 'إذا اخترت "أخرى" اكتب استفسارك هنا...';
 
+  // Details shown when a sector card or training-scenario is clicked
+  var DETAILS = EN ? {
+    "Fuel Stations": "We train fuel-station teams on safe fuel handling, fire prevention, and emergency response through realistic simulations that boost readiness and reduce incidents.",
+    "Oil & Gas": "Advanced simulation programs for oil & gas facilities covering critical operations, operational safety, and emergency response in a fully safe virtual environment.",
+    "Energy": "Training solutions for energy-sector facilities that improve operational efficiency and strengthen a culture of safety through immersive, interactive scenarios.",
+    "Private Sector": "Flexible training solutions for private companies and facilities of all sizes, tailored to each organization's needs.",
+    "Firefighting": "Realistic simulation of fire outbreaks with hands-on practice on containment, using fire equipment, and safe evacuation.",
+    "Pump operation": "Training on the correct and safe operation of fuel pumps, including fault detection and handling.",
+    "Tank handling": "Training on safe procedures for handling fuel tanks, inspection, and preventive maintenance.",
+    "Fuel leak": "Simulation of fuel-leak situations with practice on rapid containment and environmental safety procedures.",
+    "Safety procedures": "Building a strong safety culture through practice on protocols and preventive procedures in the workplace.",
+    "Using fire equipment": "Hands-on training on the correct use of firefighting equipment and tools across different situations."
+  } : {
+    "محطات الوقود": "نُدرّب فرق محطات الوقود على التعامل الآمن مع الوقود، والوقاية من الحرائق، وإجراءات الطوارئ عبر محاكاة واقعية ترفع الجاهزية وتقلّل الحوادث.",
+    "النفط والغاز": "برامج محاكاة متقدمة لمنشآت النفط والغاز تغطّي العمليات الحرجة والسلامة التشغيلية والاستجابة للطوارئ في بيئة افتراضية آمنة تمامًا.",
+    "الطاقة": "حلول تدريب لمنشآت قطاع الطاقة ترفع كفاءة التشغيل وتعزّز ثقافة السلامة عبر سيناريوهات تفاعلية غامرة.",
+    "القطاع الخاص": "حلول تدريب مرنة تناسب الشركات والمنشآت الخاصة بمختلف أحجامها، ومصمّمة حسب احتياج كل منشأة.",
+    "مكافحة الحرائق": "محاكاة واقعية لاندلاع الحرائق والتدرّب على احتوائها واستخدام معدات الإطفاء وإجراءات الإخلاء الآمن.",
+    "تشغيل المضخات": "تدريب على التشغيل الصحيح والآمن لمضخات الوقود واكتشاف الأعطال والتعامل معها.",
+    "التعامل مع الخزانات": "تدريب على الإجراءات الآمنة للتعامل مع خزانات الوقود، والفحص، والصيانة الوقائية.",
+    "تسرب الوقود": "محاكاة حالات تسرّب الوقود والتدرّب على الاحتواء السريع وإجراءات السلامة البيئية.",
+    "إجراءات السلامة": "ترسيخ ثقافة السلامة عبر التدرّب على البروتوكولات والإجراءات الوقائية في بيئة العمل.",
+    "استخدام معدات الإطفاء": "تدريب عملي على الاستخدام الصحيح لمعدات ووسائل الإطفاء في مختلف المواقف."
+  };
+
   function injectStyle() {
     if (document.getElementById('ax-enh-style')) return;
     var s = document.createElement('style');
@@ -160,6 +185,88 @@
     }
   }
 
+  function buildModal() {
+    var ex = document.getElementById('ax-modal');
+    if (ex) return ex;
+    var ov = document.createElement('div');
+    ov.id = 'ax-modal';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(10,30,28,.55);display:none;align-items:center;justify-content:center;padding:20px;font-family:inherit';
+    var box = document.createElement('div');
+    box.setAttribute('dir', EN ? 'ltr' : 'rtl');
+    box.style.cssText = 'background:#fff;max-width:460px;width:100%;border-radius:18px;padding:28px 24px 24px;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;text-align:' + (EN ? 'left' : 'right');
+    var x = document.createElement('button');
+    x.innerHTML = '&times;';
+    x.setAttribute('aria-label', 'close');
+    x.style.cssText = 'position:absolute;top:14px;' + (EN ? 'right' : 'left') + ':14px;border:none;background:#f2f5f4;width:32px;height:32px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer;color:#2a3b38';
+    var title = document.createElement('h3');
+    title.id = 'ax-modal-title';
+    title.style.cssText = 'margin:0 0 12px;font-size:20px;font-weight:800;color:#0a7e8f';
+    var desc = document.createElement('p');
+    desc.id = 'ax-modal-desc';
+    desc.style.cssText = 'margin:0 0 22px;font-size:15px;line-height:1.85;color:#3a4d4a';
+    var cta = document.createElement('a');
+    cta.textContent = EN ? 'Request a demo' : 'اطلب عرضًا';
+    cta.style.cssText = 'display:inline-block;background:#0a7e8f;color:#fff;text-decoration:none;padding:12px 24px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer';
+    box.appendChild(x); box.appendChild(title); box.appendChild(desc); box.appendChild(cta);
+    ov.appendChild(box);
+    document.documentElement.appendChild(ov);
+    function close() { ov.style.display = 'none'; }
+    x.onclick = close;
+    ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+    cta.onclick = function () {
+      close();
+      var demo = [].slice.call(document.querySelectorAll('a,button')).filter(function (b) { return /اطلب عرض|Request a Demo/i.test(b.textContent); })[0];
+      if (demo) demo.click();
+    };
+    return ov;
+  }
+
+  function openDetail(t) {
+    var d = DETAILS[t];
+    if (!d) return;
+    var ov = buildModal();
+    ov.querySelector('#ax-modal-title').textContent = t;
+    ov.querySelector('#ax-modal-desc').textContent = d;
+    ov.style.display = 'flex';
+  }
+
+  function tagClickables() {
+    // Sector cards
+    var ssec = findSection(/القطاعات التي نخدمها|Sectors We Serve/i);
+    if (ssec && !ssec.dataset.axclick) {
+      ssec.dataset.axclick = '1';
+      [].slice.call(ssec.querySelectorAll('.ax-card')).forEach(function (card) {
+        var txt = (card.textContent || '').replace(/\s+/g, ' ').trim();
+        var key = Object.keys(DETAILS).filter(function (k) { return txt.indexOf(k) >= 0; })[0];
+        if (key) { card.setAttribute('data-axdetail', key); card.style.cursor = 'pointer'; }
+      });
+    }
+    // Scenario cards
+    var scsec = findSection(/سيناريوهات التدريب|Training Scenarios/i);
+    if (scsec && !scsec.dataset.axclick) {
+      scsec.dataset.axclick = '1';
+      Object.keys(DETAILS).forEach(function (key) {
+        var els = scsec.querySelectorAll('div,span');
+        for (var i = 0; i < els.length; i++) {
+          if (els[i].children.length === 0 && els[i].textContent.trim() === key) {
+            var card = els[i].parentElement || els[i];
+            card.setAttribute('data-axdetail', key);
+            card.style.cursor = 'pointer';
+            break;
+          }
+        }
+      });
+    }
+  }
+
+  if (!window.__axClickBound) {
+    window.__axClickBound = 1;
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-axdetail]');
+      if (t) { e.preventDefault(); e.stopPropagation(); openDetail(t.getAttribute('data-axdetail')); }
+    }, true);
+  }
+
   function run() {
     injectStyle();
     var f = document.querySelector('form');
@@ -167,6 +274,7 @@
     fixHowItWorks();
     fixPlatform();
     fixWhyChoose();
+    tagClickables();
   }
 
   var t = null;
