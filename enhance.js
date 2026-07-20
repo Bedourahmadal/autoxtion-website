@@ -69,7 +69,11 @@
     "خدمة العملاء": ['التواصل الاحترافي', 'التعامل مع الشكاوى', 'إدارة المواقف الصعبة']
   };
   var LEARN = EN ? 'Learn more →' : 'اعرف أكثر ←';
-  var WA_PREFIX = EN ? "Hello, I'd like to know more about: " : 'مرحبًا، أرغب بمعرفة المزيد عن: ';
+  function waMsg(t) {
+    return EN
+      ? ('Hello Autoxtion 👋 I am interested in your training solutions for "' + t + '", and I would like to know more about how they can serve our organization.')
+      : ('مرحبًا Autoxtion 👋 أنا مهتم بحلولكم التدريبية في «' + t + '»، وأرغب بمعرفة التفاصيل وكيف يمكن أن تخدم منشأتنا.');
+  }
 
   function injectStyle() {
     if (document.getElementById('ax-enh-style')) return;
@@ -276,7 +280,7 @@
       var sp = document.createElement('span'); sp.textContent = v;
       li.appendChild(ck); li.appendChild(sp); ul.appendChild(li);
     });
-    ov.querySelector('#ax-modal-wa').href = 'https://wa.me/966562356520?text=' + encodeURIComponent(WA_PREFIX + t);
+    ov.querySelector('#ax-modal-wa').href = 'https://wa.me/966562356520?text=' + encodeURIComponent(waMsg(t));
     ov.style.display = 'flex';
     setTimeout(function () { ov.classList.add('ax-open'); }, 10);
   }
