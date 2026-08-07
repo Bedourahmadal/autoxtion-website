@@ -14,6 +14,11 @@
   That is deliberate on three counts: an exhibition hall's wifi cannot be relied on, a stand should
   not be accumulating strangers' personal data, and there is no server to run or secure.
 
+  Bilingual by switch, not by squeezing both languages onto every line. An earlier version set
+  Arabic as the page and English as small print beside it, which is fine for a visitor who reads
+  Arabic and a wall for one who does not — and at an expo in Riyadh, roughly half the people
+  walking past are in each group. The page turns over completely, direction and all.
+
   One page, one script, no external requests: at a busy stand the failure that matters is the one
   that happens to fifty people at once.
 -->
@@ -22,7 +27,7 @@
   :root {
     --ink: #0f1a19;
     --paper: #f4f6f5;
-    --accent: #2dd4bf;
+    --accent: #1a8f9e;
     --muted: #6b7d7a;
     --line: #d7dedc;
     --field: #ffffff;
@@ -31,17 +36,36 @@
   * { box-sizing: border-box; }
 
   body {
-    margin: 0;
-    padding: 24px 20px 48px;
+    margin: 0 auto;
+    padding: 20px 20px 48px;
     background: var(--paper);
     color: var(--ink);
     font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
     line-height: 1.6;
     max-width: 560px;
-    margin-inline: auto;
   }
 
-  header { text-align: center; margin-bottom: 28px; }
+  .switch { display: flex; gap: 6px; justify-content: flex-end; margin-bottom: 8px; }
+
+  .switch button {
+    width: auto;
+    margin: 0;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+
+  .switch button[aria-pressed="true"] {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  header { text-align: center; margin-bottom: 26px; }
 
   /*
     The company name is the mark, never the word set in a typeface.
@@ -50,22 +74,15 @@
     "AUTOXTION" in whatever font the phone happens to have is a different logo. Sizing is by
     height only, with the width left to follow, so it can never be stretched.
   */
-  .mark img {
-    height: 30px;
-    width: auto;
-    display: block;
-    margin: 0 auto 8px;
-  }
+  .mark img { height: 30px; width: auto; display: block; margin: 0 auto 8px; }
 
   .sub { color: var(--muted); font-size: 13px; letter-spacing: .1em; margin: 0; }
 
-  h1 { font-size: 19px; margin: 26px 0 6px; }
+  h1 { font-size: 19px; margin: 22px 0 6px; }
 
   .lead { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
 
   label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 5px; }
-
-  .en { color: var(--muted); font-weight: 400; }
 
   input {
     width: 100%;
@@ -80,26 +97,38 @@
 
   input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
 
-  button {
+  /* Names and emails are typed left to right whichever way the page runs. */
+  input[type="email"], #employee { direction: ltr; text-align: start; }
+
+  button.action {
     width: 100%;
-    margin-top: 26px;
+    margin-top: 24px;
     padding: 16px;
     font-size: 16px;
     font-weight: 700;
     font-family: inherit;
-    color: var(--ink);
+    color: #fff;
     background: var(--accent);
     border: 0;
     border-radius: 12px;
     cursor: pointer;
   }
 
-  button.quiet { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+  button.quiet {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+  }
 
   #result { display: none; text-align: center; }
-
   #result.on { display: block; }
-
   #form.off { display: none; }
 
   canvas {
@@ -112,7 +141,7 @@
   }
 
   .who { font-size: 20px; font-weight: 700; margin: 18px 0 2px; }
-  .who-id { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+  .who-id { color: var(--muted); font-size: 14px; margin: 0 0 18px; direction: ltr; }
 
   .how {
     background: #fff;
@@ -130,10 +159,15 @@
 
   .warn { color: #b4531f; font-size: 13px; min-height: 20px; margin-top: 10px; }
 
-  footer { margin-top: 34px; text-align: center; color: var(--muted); font-size: 12px; }
+  footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: 12px; }
 </style>
 </head>
 <body>
+
+<div class="switch">
+  <button type="button" id="ar" aria-pressed="true">العربية</button>
+  <button type="button" id="en" aria-pressed="false">English</button>
+</div>
 
 <header>
   <p class="mark"><img src="../uploads/logo.png" alt="AUTOXTION"></p>
@@ -141,69 +175,150 @@
 </header>
 
 <form id="form" autocomplete="on">
-  <h1>بياناتك · Your details</h1>
-  <p class="lead">
-    عبّئ البيانات، ثم ارفع الرمز أمام النظارة.
-    <br>
-    <span class="en">Fill these in, then hold the code up to the headset.</span>
-  </p>
+  <h1 data-t="title"></h1>
+  <p class="lead" data-t="lead"></p>
 
-  <label for="name">الاسم الكامل <span class="en">· Full name</span></label>
-  <input id="name" name="name" required autocomplete="name" placeholder="أحمد علي">
+  <label for="name" data-t="name"></label>
+  <input id="name" name="name" required autocomplete="name">
 
-  <label for="employee">الرقم الوظيفي <span class="en">· Employee ID</span></label>
-  <input id="employee" name="employee" required placeholder="EMP-1025">
+  <label for="employee" data-t="employee"></label>
+  <input id="employee" name="employee" required>
 
-  <label for="department">القسم <span class="en">· Department</span></label>
-  <input id="department" name="department" placeholder="العمليات">
+  <label for="department" data-t="department"></label>
+  <input id="department" name="department">
 
-  <label for="company">الشركة <span class="en">· Company</span></label>
-  <input id="company" name="company" placeholder="Autoxtion Energy">
+  <label for="company" data-t="company"></label>
+  <input id="company" name="company">
 
-  <label for="email">بريدك <span class="en">· Your email</span></label>
-  <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@company.com">
+  <label for="email" data-t="email"></label>
+  <input id="email" name="email" type="email" required autocomplete="email">
 
-  <label for="supervisor">بريد المشرف <span class="en">· Supervisor's email</span></label>
-  <input id="supervisor" name="supervisor" type="email" required placeholder="supervisor@company.com">
+  <label for="supervisor" data-t="supervisor"></label>
+  <input id="supervisor" name="supervisor" type="email" required>
 
   <p class="warn" id="warn"></p>
 
-  <button type="submit">أنشئ الشارة · Create badge</button>
+  <button type="submit" class="action" data-t="create"></button>
 </form>
 
 <section id="result">
-  <canvas id="code" aria-label="رمز الشارة"></canvas>
+  <canvas id="code"></canvas>
 
   <p class="who" id="who"></p>
   <p class="who-id" id="whoId"></p>
 
   <div class="how">
-    <p><b>١.</b> ارفع سطوع شاشتك إلى أقصاها.</p>
-    <p><b>٢.</b> البس النظارة وارفع الجوال أمام وجهك.</p>
-    <p><b>٣.</b> انتظر حتى يظهر اسمك على الشاشة.</p>
+    <p><b>1.</b> <span data-t="step1"></span></p>
+    <p><b>2.</b> <span data-t="step2"></span></p>
+    <p><b>3.</b> <span data-t="step3"></span></p>
   </div>
 
-  <button type="button" class="quiet" id="back">تعديل البيانات · Edit details</button>
+  <button type="button" class="quiet" id="back" data-t="edit"></button>
 </section>
 
-<footer>
-  لا تُرسل بياناتك إلى أي خادم. تبقى على جهازك.
-  <br>
-  Your details never leave this phone.
-</footer>
+<footer data-t="privacy"></footer>
 
 <script src="qr.js"></script>
 <script>
 (function () {
   'use strict';
 
+  var WORDS = {
+    ar: {
+      title: 'بياناتك',
+      lead: 'عبّئ بياناتك، ثم ارفع الرمز أمام النظارة.',
+      name: 'الاسم الكامل',
+      employee: 'الرقم الوظيفي',
+      department: 'القسم',
+      company: 'الشركة',
+      email: 'بريدك الإلكتروني',
+      supervisor: 'بريد المشرف الإلكتروني',
+      create: 'أنشئ الشارة',
+      edit: 'تعديل البيانات',
+      step1: 'ارفع سطوع شاشتك إلى أقصاها.',
+      step2: 'البس النظارة وارفع الجوال أمام وجهك.',
+      step3: 'انتظر حتى يظهر اسمك على الشاشة.',
+      privacy: 'لا تُرسل بياناتك إلى أي خادم. تبقى على جهازك.',
+      pipe: 'الرجاء إزالة الرمز | من البيانات.',
+      long: 'البيانات طويلة جداً على رمز واحد.',
+      holders: {
+        name: 'أحمد علي', employee: 'EMP-1025', department: 'العمليات',
+        company: 'أوتوكشن للطاقة', email: 'you@company.com', supervisor: 'supervisor@company.com'
+      }
+    },
+    en: {
+      title: 'Your details',
+      lead: 'Fill these in, then hold the code up to the headset.',
+      name: 'Full name',
+      employee: 'Employee ID',
+      department: 'Department',
+      company: 'Company',
+      email: 'Your email',
+      supervisor: "Supervisor's email",
+      create: 'Create badge',
+      edit: 'Edit details',
+      step1: 'Turn your screen brightness all the way up.',
+      step2: 'Put the headset on and hold your phone in front of your face.',
+      step3: 'Wait until your name appears on screen.',
+      privacy: 'Your details are never sent to a server. They stay on this phone.',
+      pipe: 'Please remove the | character from your details.',
+      long: 'Those details are too long for one code.',
+      holders: {
+        name: 'Ahmed Ali', employee: 'EMP-1025', department: 'Operations',
+        company: 'Autoxtion Energy', email: 'you@company.com', supervisor: 'supervisor@company.com'
+      }
+    }
+  };
+
+  var language = pick();
+
+  function pick() {
+    var saved = null;
+    try { saved = localStorage.getItem('autoxtion.badge.lang'); } catch (e) {}
+    if (saved === 'ar' || saved === 'en') return saved;
+
+    // The phone already knows. Asking someone to choose a language is a question they have
+    // answered once already, in their own settings.
+    return (navigator.language || 'ar').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
+  }
+
+  function speak(next) {
+    language = next;
+    try { localStorage.setItem('autoxtion.badge.lang', next); } catch (e) {}
+
+    var words = WORDS[next];
+
+    document.documentElement.lang = next;
+    document.documentElement.dir = next === 'ar' ? 'rtl' : 'ltr';
+
+    var slots = document.querySelectorAll('[data-t]');
+    for (var i = 0; i < slots.length; i++) {
+      slots[i].textContent = words[slots[i].getAttribute('data-t')];
+    }
+
+    for (var field in words.holders) {
+      if (Object.prototype.hasOwnProperty.call(words.holders, field)) {
+        document.getElementById(field).placeholder = words.holders[field];
+      }
+    }
+
+    document.getElementById('ar').setAttribute('aria-pressed', next === 'ar');
+    document.getElementById('en').setAttribute('aria-pressed', next === 'en');
+    document.getElementById('warn').textContent = '';
+  }
+
+  document.getElementById('ar').addEventListener('click', function () { speak('ar'); });
+  document.getElementById('en').addEventListener('click', function () { speak('en'); });
+
+  speak(language);
+
+  // ---- the badge itself ---------------------------------------------------------------
+
   var form = document.getElementById('form');
   var result = document.getElementById('result');
   var warn = document.getElementById('warn');
 
-  function value(id) {
-    return document.getElementById(id).value.trim();
-  }
+  function value(id) { return document.getElementById(id).value.trim(); }
 
   form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -214,7 +329,7 @@
     // A pipe inside a field would split it into two on the headset's side and quietly shift every
     // field after it — the supervisor's address would arrive as the company name.
     if (fields.some(function (f) { return f.indexOf('|') !== -1; })) {
-      warn.textContent = 'الرجاء إزالة الرمز | من البيانات · Please remove the | character.';
+      warn.textContent = WORDS[language].pipe;
       return;
     }
 
@@ -225,7 +340,7 @@
     try {
       drawQr(document.getElementById('code'), payload, 8);
     } catch (error) {
-      warn.textContent = 'البيانات طويلة جداً · Details are too long for one code.';
+      warn.textContent = WORDS[language].long;
       return;
     }
 
