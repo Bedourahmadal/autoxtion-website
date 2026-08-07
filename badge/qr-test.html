@@ -168,10 +168,14 @@ if (winner < 0) { say(label + 'FAIL — no mask returns the payload'); return fa
     for (var i = 14; i >= 0; i--) w = (w << 1) | grid[coords[i][0]][coords[i][1]];
     return w;
   }
+  // The standard's positions, written out here independently of the encoder rather than copied
+  // from it. That distinction is the whole value of this check: the previous version mirrored
+  // whatever the encoder did, so when the encoder was wrong the test agreed with it and the codes
+  // went out unreadable.
   var copy1 = [], copy2 = [];
   for (var i = 0; i < 15; i++) {
-    copy1.push(i < 6 ? [8, i] : i === 6 ? [8, 7] : i === 7 ? [8, 8] : i === 8 ? [7, 8] : [14 - i, 8]);
-    copy2.push(i < 7 ? [size - 1 - i, 8] : [8, size - 15 + i]);
+    copy1.push(i < 6 ? [i, 8] : i === 6 ? [7, 8] : i === 7 ? [8, 8] : i === 8 ? [8, 7] : [8, 14 - i]);
+    copy2.push(i < 8 ? [8, size - 1 - i] : [size - 15 + i, 8]);
   }
 
   // Re-generate the fifteen-bit codeword from the five bits of meaning it claims to carry, and

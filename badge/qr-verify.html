@@ -1,0 +1,74 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>qr — read by someone else</title>
+<body style="font:13px/1.7 monospace; background:#fff; padding:16px">
+<pre id="out">loading a decoder…</pre>
+<canvas id="c"></canvas>
+
+<!--
+  The check that matters, and the one the round-trip test cannot make.
+
+  qr-test.html reads the code back with a decoder written alongside the encoder, so it proves the
+  two agree — and they agreed once while both were wrong, because a mistake in where the format
+  bits go was mirrored in both. A round trip through your own assumptions proves consistency, not
+  correctness.
+
+  This page hands the drawn pixels to jsQR, which knows nothing about how they were made. If it
+  reads the payload back, so will a phone.
+
+  It is a development page and never part of the visitor's flow: the badge page itself still has
+  no external requests and still sends nobody's details anywhere. Run this locally, not on the
+  live site.
+-->
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="qr.js"></script>
+<script>
+var PAYLOADS = [
+  'AXT1|Ali|7|Ops|Autoxtion|a@x.com|s@x.com',
+  'AXT1|بدور احمد|11000|العمليات|أوتوكشن للطاقة|bedour@autoxtion.com|sup@autoxtion.com',
+  'AXT1|Abdulrahman Al-Qahtani|EMP-204417|Health Safety and Environment|' +
+    'Autoxtion Energy Services Limited|abdulrahman.alqahtani@autoxtion-energy.com|' +
+    'mohammed.supervisor@autoxtion-energy.com'
+];
+
+var lines = [];
+function say(s) { lines.push(s); document.getElementById('out').textContent = lines.join('\n'); }
+
+if (typeof jsQR !== 'function') {
+  say('The decoder did not load. Without it this page proves nothing — check the network.');
+} else {
+  var canvas = document.getElementById('c');
+  var ctx = canvas.getContext('2d');
+  var allRead = true;
+
+  PAYLOADS.forEach(function (payload, index) {
+    var version = drawQr(canvas, payload, 6);
+    var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    var found = jsQR(image.data, image.width, image.height);
+
+    var label = 'version ' + String(version).padStart(2) + '  ·  ' +
+                String(payload.length).padStart(3) + ' chars  ·  ';
+
+    if (!found) {
+      say(label + 'NOT READ — the decoder found no code at all');
+      allRead = false;
+    } else if (found.data !== payload) {
+      say(label + 'READ, BUT WRONG');
+      say('   wanted: ' + payload);
+      say('   got   : ' + found.data);
+      allRead = false;
+    } else {
+      say(label + 'read correctly by jsQR');
+    }
+  });
+
+  say('');
+  say(allRead
+    ? 'PASS — an independent decoder reads every code back exactly. A phone will too.'
+    : 'FAIL — these codes are not readable, whatever the round-trip test says.');
+}
+</script>
+</body>

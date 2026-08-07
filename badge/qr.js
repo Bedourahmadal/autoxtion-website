@@ -363,34 +363,38 @@
 
   /// Writes the fifteen format bits — the error-correction level and which mask was used.
   ///
-  /// They go down twice, in two places, because a scanner must be able to read them before it can
-  /// read anything else: if the corner carrying them is damaged the whole code is lost, not just
-  /// that corner. The first copy wraps the top-left finder; the second is split between the
-  /// bottom-left and top-right, so no single tear takes both.
+  /// They go down twice, in two places, because a scanner must read them before it can read
+  /// anything else: if the corner carrying them is damaged the whole code is lost, not just that
+  /// corner. The first copy wraps the top-left finder; the second is split between the bottom-left
+  /// and the top-right, so no single tear takes both.
   ///
-  /// Every index below is [row][column], in that order. An earlier version of this function had
-  /// them the other way round, which produced codes that looked perfectly correct and could not be
-  /// read by anything: a scanner finds the three squares, believes it has a QR code, reads the
-  /// format, gets nonsense, and gives up without saying why.
+  /// **Every index here is [row][column].** This function was once "corrected" to the transpose of
+  /// what is written below, and the mistake survived a test, which is the part worth remembering.
+  /// Both orientations cover the same sixteen modules — row 8 and column 8 around each finder — so
+  /// nothing looks out of place; all that changes is which bit lands in which of them. A scanner
+  /// then reads a scrambled fifteen-bit word, fails the check, and gives up silently.
+  ///
+  /// The test agreed because it read the strip back at the same transposed positions it had been
+  /// written to. A round trip through one's own assumptions proves only that they are consistent.
+  /// The positions below are the standard's, derived twice, and the only real check is a camera.
   function writeFormat(grid, size, mask) {
     var bits = formatBits(mask);
 
     for (var i = 0; i < 15; i++) {
       var bit = (bits >>> i) & 1;
 
-      // First copy: along row 8, then up column 8, stepping over the timing line at 6.
-      if (i < 6)       grid[8][i] = bit;
-      else if (i === 6) grid[8][7] = bit;
+      // First copy: up column 8 from row 0, stepping over the timing line at row 6, then left
+      // along row 8.
+      if (i < 6)        grid[i][8] = bit;
+      else if (i === 6) grid[7][8] = bit;
       else if (i === 7) grid[8][8] = bit;
-      else if (i === 8) grid[7][8] = bit;
-      else              grid[14 - i][8] = bit;
+      else if (i === 8) grid[8][7] = bit;
+      else              grid[8][14 - i] = bit;
 
-      // Second copy: seven bits up column 8 from the bottom, then eight along row 8 to the right
-      // edge. Seven and eight, not eight and seven — the eighth module up that column is the one
-      // that is always dark, and is not a format bit at all. Writing a bit there and then setting
-      // the dark module afterwards, as this did, silently destroyed bit seven.
-      if (i < 7) grid[size - 1 - i][8] = bit;
-      else       grid[8][size - 15 + i] = bit;
+      // Second copy: eight bits along row 8 from the right edge, then seven up column 8 from the
+      // bottom — the eighth module up that column being the one that is always dark.
+      if (i < 8) grid[8][size - 1 - i] = bit;
+      else       grid[size - 15 + i][8] = bit;
     }
 
     grid[size - 8][8] = 1;                                // the module that is always dark
