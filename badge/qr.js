@@ -237,11 +237,22 @@
       }
     }
 
-    // Reserve the format strip and, on larger codes, the version blocks.
+    // Reserve the format strips, and on larger codes the version blocks.
+    //
+    // The counts differ and the difference matters. The copy around the top-left finder is nine
+    // modules on each arm, because it steps over the timing line at 6. The other copy is eight on
+    // each arm — fifteen bits split as eight and seven, with the always-dark module making up the
+    // eighth on the bottom arm. Reserving nine there, as this did at first, hides one perfectly
+    // good data module; every bit after it lands one place late, and the code decodes to nothing.
     for (var i = 0; i < 9; i++) {
-      reserved[8][i] = reserved[i][8] = true;
-      if (size - 1 - i >= 0) reserved[8][size - 1 - i] = reserved[size - 1 - i][8] = true;
+      reserved[8][i] = true;                              // top-left, along row 8
+      reserved[i][8] = true;                              // top-left, up column 8
     }
+    for (var j = 0; j < 8; j++) {
+      reserved[8][size - 1 - j] = true;                   // top-right, along row 8
+      reserved[size - 1 - j][8] = true;                   // bottom-left, up column 8
+    }
+
     grid[size - 8][8] = 1;
     reserved[size - 8][8] = true;
 
@@ -350,22 +361,39 @@
     return best;
   }
 
+  /// Writes the fifteen format bits — the error-correction level and which mask was used.
+  ///
+  /// They go down twice, in two places, because a scanner must be able to read them before it can
+  /// read anything else: if the corner carrying them is damaged the whole code is lost, not just
+  /// that corner. The first copy wraps the top-left finder; the second is split between the
+  /// bottom-left and top-right, so no single tear takes both.
+  ///
+  /// Every index below is [row][column], in that order. An earlier version of this function had
+  /// them the other way round, which produced codes that looked perfectly correct and could not be
+  /// read by anything: a scanner finds the three squares, believes it has a QR code, reads the
+  /// format, gets nonsense, and gives up without saying why.
   function writeFormat(grid, size, mask) {
     var bits = formatBits(mask);
 
     for (var i = 0; i < 15; i++) {
       var bit = (bits >>> i) & 1;
-      if (i < 6) grid[i][8] = bit;
-      else if (i === 6) grid[7][8] = bit;
-      else if (i === 7) grid[8][8] = bit;
-      else if (i === 8) grid[8][7] = bit;
-      else grid[8][14 - i] = bit;
 
-      if (i < 8) grid[8][size - 1 - i] = bit;
-      else grid[size - 15 + i][8] = bit;
+      // First copy: along row 8, then up column 8, stepping over the timing line at 6.
+      if (i < 6)       grid[8][i] = bit;
+      else if (i === 6) grid[8][7] = bit;
+      else if (i === 7) grid[8][8] = bit;
+      else if (i === 8) grid[7][8] = bit;
+      else              grid[14 - i][8] = bit;
+
+      // Second copy: seven bits up column 8 from the bottom, then eight along row 8 to the right
+      // edge. Seven and eight, not eight and seven — the eighth module up that column is the one
+      // that is always dark, and is not a format bit at all. Writing a bit there and then setting
+      // the dark module afterwards, as this did, silently destroyed bit seven.
+      if (i < 7) grid[size - 1 - i][8] = bit;
+      else       grid[8][size - 15 + i] = bit;
     }
 
-    grid[size - 8][8] = 1;
+    grid[size - 8][8] = 1;                                // the module that is always dark
   }
 
   function writeVersion(grid, size, version) {

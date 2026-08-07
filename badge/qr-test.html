@@ -1,0 +1,207 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>qr round trip</title>
+<body style="font:13px/1.6 monospace; background:#fff; padding:16px">
+<pre id="out">running…</pre>
+<canvas id="c"></canvas>
+
+<script src="qr.js"></script>
+<script>
+/*
+  An independent check on the encoder, standing as far outside it as possible.
+
+  It does not look at any variable the encoder produced. It reads the drawn canvas back pixel by
+  pixel — which is what a camera does — and works from that grid alone. It never asks which mask
+  was used; it tries all eight and keeps whichever one yields the payload back. That makes the data
+  path (placement, interleaving, bit order, UTF-8) provable without trusting the writer.
+
+  The format bits are then checked separately, at the positions the standard names, by running the
+  BCH code over them. A fifteen-bit word carrying five bits of meaning has enough redundancy that
+  wrong bits essentially never validate — so if the strip reads back as a valid word naming the
+  same mask that just worked, it was written in the right place.
+*/
+// Several, because the paths differ. Codes below version 7 carry no version block; codes at
+// version 10 and up write the length in sixteen bits rather than eight; more than one block only
+// appears once the code is large enough to need splitting. A single test proves one of those.
+var PAYLOADS = [
+  'AXT1|Ali|7|Ops|Autoxtion|a@x.com|s@x.com',
+  'AXT1|بدور احمد|11000|العمليات|أوتوكشن للطاقة|bedour@autoxtion.com|sup@autoxtion.com',
+  'AXT1|Abdulrahman Al-Qahtani|EMP-204417|Health Safety and Environment|' +
+    'Autoxtion Energy Services Limited|abdulrahman.alqahtani@autoxtion-energy.com|' +
+    'mohammed.supervisor@autoxtion-energy.com',
+  'AXT1|محمد عبدالرحمن القحطاني|EMP-204417|الصحة والسلامة والبيئة|' +
+    'أوتوكشن لخدمات الطاقة المحدودة|mohammed.alqahtani@autoxtion-energy.com|' +
+    'supervisor.hse@autoxtion-energy.com'
+];
+var PAYLOAD;
+
+var ECC_PER_BLOCK = [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26];
+var BLOCKS        = [-1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5, 5, 8, 9, 9,10,10,11,13,14,16];
+var ALIGNMENT = [[],[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],
+  [6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],
+  [6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90]];
+
+var lines = [];
+function say(s) { lines.push(s); document.getElementById('out').textContent = lines.join('\n'); }
+
+function run(PAYLOAD) {
+var scale = 8, quiet = 4;
+var version = drawQr(document.getElementById('c'), PAYLOAD, scale);
+var size = version * 4 + 17;
+
+// --- read the picture back, the way a camera would ---------------------------------------
+var ctx = document.getElementById('c').getContext('2d');
+var grid = [];
+for (var r = 0; r < size; r++) {
+  grid.push([]);
+  for (var c = 0; c < size; c++) {
+    var px = ctx.getImageData((c + quiet) * scale + scale / 2, (r + quiet) * scale + scale / 2, 1, 1).data;
+    grid[r].push(px[0] < 128 ? 1 : 0);        // dark ink = 1
+  }
+}
+
+// --- work out which modules are function patterns, from the version alone -----------------
+var fixed = [];
+for (var i = 0; i < size; i++) fixed.push(new Array(size).fill(false));
+
+function block(r0, c0, h, w) {
+  for (var r = r0; r < r0 + h; r++)
+    for (var c = c0; c < c0 + w; c++)
+      if (r >= 0 && r < size && c >= 0 && c < size) fixed[r][c] = true;
+}
+block(0, 0, 9, 9); block(0, size - 8, 9, 8); block(size - 8, 0, 8, 9);
+for (var t = 0; t < size; t++) { fixed[6][t] = true; fixed[t][6] = true; }
+
+var centres = ALIGNMENT[version];
+for (var a = 0; a < centres.length; a++)
+  for (var b = 0; b < centres.length; b++) {
+    var ar = centres[a], ac = centres[b];
+    if ((ar === 6 && ac === 6) || (ar === 6 && ac === size - 7) || (ar === size - 7 && ac === 6)) continue;
+    block(ar - 2, ac - 2, 5, 5);
+  }
+if (version >= 7) { block(size - 11, 0, 3, 6); block(0, size - 11, 6, 3); }
+
+function maskBit(m, r, c) {
+  switch (m) {
+    case 0: return (r + c) % 2 === 0;
+    case 1: return r % 2 === 0;
+    case 2: return c % 3 === 0;
+    case 3: return (r + c) % 3 === 0;
+    case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+    case 5: return (r * c) % 2 + (r * c) % 3 === 0;
+    case 6: return ((r * c) % 2 + (r * c) % 3) % 2 === 0;
+    default: return ((r + c) % 2 + (r * c) % 3) % 2 === 0;
+  }
+}
+
+// --- try every mask; the right one gives the text back ------------------------------------
+function readWith(mask) {
+  var bits = [], upward = true;
+  for (var col = size - 1; col > 0; col -= 2) {
+    if (col === 6) col--;
+    for (var step = 0; step < size; step++) {
+      var row = upward ? size - 1 - step : step;
+      for (var side = 0; side < 2; side++) {
+        var c = col - side;
+        if (fixed[row][c]) continue;
+        bits.push(grid[row][c] ^ (maskBit(mask, row, c) ? 1 : 0));
+      }
+    }
+    upward = !upward;
+  }
+
+  var stream = [];
+  for (var i = 0; i + 8 <= bits.length; i += 8) {
+    var v = 0;
+    for (var k = 0; k < 8; k++) v = (v << 1) | bits[i + k];
+    stream.push(v);
+  }
+
+  // undo the interleaving
+  var blocks = BLOCKS[version], eccLen = ECC_PER_BLOCK[version];
+  var totalData = stream.length - eccLen * blocks;
+  var shortLen = Math.floor(totalData / blocks), longCount = totalData % blocks;
+
+  var out = [], lengths = [], p = 0;
+  for (var d = 0; d < blocks; d++) { lengths.push(shortLen + (d >= blocks - longCount ? 1 : 0)); out.push([]); }
+  var longest = shortLen + (longCount > 0 ? 1 : 0);
+  for (var cidx = 0; cidx < longest; cidx++)
+    for (var bidx = 0; bidx < blocks; bidx++)
+      if (cidx < lengths[bidx]) out[bidx].push(stream[p++]);
+
+  var words = [].concat.apply([], out);
+
+  if (((words[0] >> 4) & 0xF) !== 4) return null;           // not byte mode → wrong mask
+  var lenBits = version < 10 ? 8 : 16;
+  var head = (words[0] << 16) | (words[1] << 8) | words[2];
+  var length = version < 10 ? (head >> (24 - 4 - 8)) & 0xFF : (head >> (24 - 4 - 16)) & 0xFFFF;
+  if (length <= 0 || length > words.length) return null;
+
+  var bitPos = 4 + lenBits, bytes = [];
+  for (var n = 0; n < length; n++) {
+    var val = 0;
+    for (var q = 0; q < 8; q++) {
+      var abs = bitPos + n * 8 + q;
+      val = (val << 1) | ((words[abs >> 3] >> (7 - (abs & 7))) & 1);
+    }
+    bytes.push(val);
+  }
+
+  try {
+    return decodeURIComponent(bytes.map(function (x) { return '%' + ('0' + x.toString(16)).slice(-2); }).join(''));
+  } catch (e) { return null; }
+}
+
+var winner = -1;
+for (var m = 0; m < 8; m++) if (readWith(m) === PAYLOAD) winner = m;
+
+var label = 'version ' + String(version).padStart(2) + '  ·  ' +
+            String(BLOCKS[version]).padStart(2) + ' block(s)  ·  ' +
+            String(PAYLOAD.length).padStart(3) + ' chars  ·  ';
+
+if (winner < 0) { say(label + 'FAIL — no mask returns the payload'); return false; }
+{
+  // --- now the format strip, at the standard's positions ---------------------------------
+  function formatWord(coords) {
+    var w = 0;
+    for (var i = 14; i >= 0; i--) w = (w << 1) | grid[coords[i][0]][coords[i][1]];
+    return w;
+  }
+  var copy1 = [], copy2 = [];
+  for (var i = 0; i < 15; i++) {
+    copy1.push(i < 6 ? [8, i] : i === 6 ? [8, 7] : i === 7 ? [8, 8] : i === 8 ? [7, 8] : [14 - i, 8]);
+    copy2.push(i < 7 ? [size - 1 - i, 8] : [8, size - 15 + i]);
+  }
+
+  // Re-generate the fifteen-bit codeword from the five bits of meaning it claims to carry, and
+  // compare. Ten bits of check on five bits of payload: wrong bits do not survive this.
+  function check(word) {
+    var raw = word ^ 0x5412;
+    var data = raw >>> 10;
+    var r2 = data;
+    for (var j = 0; j < 10; j++) r2 = (r2 << 1) ^ ((r2 >>> 9) * 0x537);
+    var expect = ((data << 10) | r2);
+    return { valid: expect === raw, ec: (data >> 3) & 3, mask: data & 7 };
+  }
+
+  var one = check(formatWord(copy1)), two = check(formatWord(copy2));
+  var ok = one.valid && two.valid && one.mask === winner && two.mask === winner && one.ec === 0;
+
+  say(label + (ok
+    ? 'PASS  (mask ' + winner + ', both format copies valid, level M)'
+    : 'FORMAT WRONG  (copy1 ' + one.valid + ', copy2 ' + two.valid + ')'));
+  return ok;
+}
+}
+
+var allPassed = true;
+for (var p = 0; p < PAYLOADS.length; p++) allPassed = run(PAYLOADS[p]) && allPassed;
+
+say('');
+say(allPassed
+  ? 'ALL PASS — every code decodes back to exactly what went in.'
+  : 'SOMETHING FAILED — see above.');
+window.__verdict = allPassed;
+</script>
+</body>
