@@ -7,6 +7,20 @@
 <meta name="description" content="Fill in your details and hold the code up to the headset.">
 
 <!--
+  Never served from a stale copy.
+
+  The page and the encoder are two files that only work as a pair, and a phone that has one of
+  them cached and the other fresh produces a code drawn by new arithmetic through an old call —
+  which is a code that looks right and scans as nothing. That failure happened in testing and is
+  invisible from the phone: nothing is broken, nothing errors, the picture is simply wrong.
+
+  Ten minutes of caching is normally a kindness. On a page that is edited between one visitor and
+  the next at a stand, it is a trap.
+-->
+<meta http-equiv="cache-control" content="no-cache, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+
+<!--
   The visitor's half of registration.
 
   Everything happens on this phone. The details are typed here, the code is drawn here, and it is
@@ -131,9 +145,20 @@
   #result.on { display: block; }
   #form.off { display: none; }
 
+  /*
+    Bigger than it was, and as big as the phone will allow.
+
+    The code is the one thing on this page that has to survive being photographed, and every
+    millimetre of it is a millimetre the camera does not have to resolve. 340px was a number chosen
+    to look tidy; the headset reading it across a room is the constraint that actually matters.
+
+    The white margin is drawn into the canvas itself, so the padding here is only to keep the
+    rounded corner from clipping the quiet zone.
+  */
   canvas {
-    width: 100%;
-    max-width: 340px;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
     height: auto;
     border-radius: 14px;
     border: 1px solid var(--line);
@@ -218,7 +243,9 @@
 
 <footer data-t="privacy"></footer>
 
-<script src="qr.js"></script>
+<!-- The number is bumped whenever qr.js changes, so a cached encoder can never outlive the page
+     that calls it. If you edit qr.js and this stays the same, somebody will scan a broken code. -->
+<script src="qr.js?v=3"></script>
 <script>
 (function () {
   'use strict';
@@ -338,7 +365,12 @@
     var payload = ['AXT1'].concat(fields).join('|');
 
     try {
-      drawQr(document.getElementById('code'), payload, 8);
+      // Drawn to the width it will actually occupy, so every module is a whole number of device
+      // pixels. Measured from the page rather than the form: a hidden element reports a width of
+      // zero, and measuring one produced a code an inch across that technically decoded and would
+      // have been useless to a camera.
+      var room = Math.min(520, document.body.clientWidth - 40);
+      drawQr(document.getElementById('code'), payload, room);
     } catch (error) {
       warn.textContent = WORDS[language].long;
       return;

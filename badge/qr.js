@@ -415,14 +415,37 @@
 
   /// Draws onto a canvas. The quiet border is not optional — a code without four modules of blank
   /// around it is one most phone cameras will refuse to see.
-  global.drawQr = function (canvas, text, pixel) {
+  ///
+  /// The third argument is the width the code will be *displayed* at, in CSS pixels, not a module
+  /// size. That inversion is deliberate. Drawing at a fixed module size and letting the page shrink
+  /// the result to fit meant a long payload — more modules, a wider drawing — was scaled down by
+  /// some fraction like 0.62, and a fraction is the one thing a QR code cannot survive well: every
+  /// module edge lands mid-pixel and is averaged with its neighbour. On screen the result still
+  /// decodes; through a camera lens, with its own blur and glare on top, the softened edges are the
+  /// difference between reading and not.
+  ///
+  /// Sized from the display instead, each module is a whole number of device pixels and every edge
+  /// is exactly where it should be, whatever the payload turns out to weigh.
+  global.drawQr = function (canvas, text, displayWidth) {
     var built = build(text);
     var grid = apply(built);
     var size = built.size;
     var quiet = 4;
-    var scale = pixel || 8;
+    var across = size + quiet * 2;
 
-    canvas.width = canvas.height = (size + quiet * 2) * scale;
+    var density = global.devicePixelRatio || 1;
+    var wanted = (displayWidth || 340) * density;
+
+    // Whole device pixels per module, never below three — under that no amount of care in the
+    // drawing survives a camera.
+    var scale = Math.max(3, Math.floor(wanted / across));
+
+    canvas.width = canvas.height = across * scale;
+
+    // The element keeps the size the page asked for; only the pixels behind it change. Without
+    // this the canvas would grow past its column on a wide screen.
+    canvas.style.width = (canvas.width / density) + 'px';
+    canvas.style.height = canvas.style.width;
 
     var context = canvas.getContext('2d');
     context.fillStyle = '#ffffff';
