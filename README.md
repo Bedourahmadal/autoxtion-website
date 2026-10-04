@@ -1,16 +1,22 @@
 # Autoxtion Website — Handoff
 
 ## What this is
-A finished bilingual (Arabic RTL + English LTR) one-page marketing website for **Autoxtion**, a company providing AI + Extended-Reality training solutions for the oil & gas / fuel-station sectors.
+The bilingual (Arabic RTL + English LTR) marketing site for **AUTOXTION — Intelligent Immersive Experiences**: immersive training & simulation, immersive learning and interactive XR experiences, for industry & energy, education, training and culture & heritage.
 
-The site is **already built and works** — it is plain, self-contained HTML (no build step, no framework, no server). You just need to host it and point the domain at it. The owner got stuck on the DNS/hosting step and wants help finishing deployment.
+Plain static HTML, CSS and JS — no build step, no framework, no server.
 
-## Files in this bundle (`site/`)
+## Files
 - **`index.html`** — Arabic homepage (the main page; must stay named `index.html`).
-- **`AUTOXTION-EN.html`** — English version.
-- The two are linked by an in-page language switch (EN ⇄ عربي). All images and the hero video are embedded/linked inside the files.
+- **`en/index.html`** — English homepage, same structure.
+- **`assets/css/site.css`** — every style, one file for both directions (logical properties only).
+- **`assets/js/site.js`** — menu, sector tabs, the enquiry form, WhatsApp link.
+- **`assets/img/`** — images in three widths each (700 / 1000–1400 / 1536–2000) for `srcset`; `og-autoxtion.jpg` is the share image.
+- **`assets/brand/`** — the vector logo and the favicon (the favicon is temporary).
+- **`AUTOXTION-EN.html`** — the old English address, kept only to forward to `/en/`.
+- **`robots.txt`, `sitemap.xml`** — search engines.
+- **`badge/`** — the training badge page (separate; still uses `uploads/logo.png`).
 
-Both are fully standalone: open `index.html` in any browser and everything renders. No npm install, no bundler.
+Rules the site keeps: light backgrounds, one teal accent (`#0A7E8F`), no project footage or client details, no unsupported numbers, no images of women.
 
 ## The domain & hosting situation (this is what needs finishing)
 - **Domain:** `autoxtion.com`, registered at **Hostinger**.
@@ -37,9 +43,8 @@ Rather than the mixed A-record/nameserver state above, simplest is:
 3. Re-add the Hostinger email records listed above in the Cloudflare DNS tab (MX + SPF + DMARC + DKIM), so email keeps flowing.
 4. Confirm SSL is Active, then test `autoxtion.com`, `www.autoxtion.com`, and the EN page.
 
-## The demo form (already wired)
-The "Request a Demo" popup posts to **Formspree** endpoint `https://formspree.io/f/xykrwpbv` — submissions email the site owner. After go-live, in Formspree set "Restrict to Domain" = `autoxtion.com`. The first real submission triggers a one-time confirmation email from Formspree.
+## The enquiry form
+The form on the homepage posts to **FormSubmit** (`https://formsubmit.co/ajax/info@autoxtion.com`); copies go to the addresses in the hidden `_cc` field. Every "Discuss your project" / "Request a demo" button scrolls to it and pre-selects the request type.
 
 ## Notes
-- Hero video is embedded from Google Drive (`/preview` iframe) — needs internet; consider self-hosting an mp4 later for speed.
-- These HTML files are the actual deliverable, not a prototype to rebuild — they can be shipped as-is. The only task is hosting + DNS.
+- Fonts come from Google Fonts: Alexandria (Arabic) and Plus Jakarta Sans (Latin) — the free pair closest to Roobert, which pixaera.com uses. Self-host them before launch for speed.

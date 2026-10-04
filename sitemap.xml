@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://autoxtion.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/solutions/training-simulation/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/training-simulation/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/training-simulation/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/en/solutions/training-simulation/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/training-simulation/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/training-simulation/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/solutions/immersive-learning/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/immersive-learning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/immersive-learning/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/en/solutions/immersive-learning/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/immersive-learning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/immersive-learning/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/solutions/interactive-xr/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/interactive-xr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/interactive-xr/"/>
+  </url>
+  <url>
+    <loc>https://autoxtion.com/en/solutions/interactive-xr/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://autoxtion.com/solutions/interactive-xr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://autoxtion.com/en/solutions/interactive-xr/"/>
+  </url>
+</urlset>
