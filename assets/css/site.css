@@ -259,6 +259,8 @@ p{ margin:0; }
 .hero--dark .btn--secondary:hover{ background:rgba(244,242,238,.08); border-color:rgba(244,242,238,.5); }
 .hero--dark :focus-visible{ outline-color:#F4F2EE; }
 .hero--dark .hero-people{ margin-block-start:clamp(2rem,1rem + 3vw,3.5rem); }
+/* without the photo the hero closes on its own spacing */
+.hero--dark:not(:has(.hero-people)){ padding-block-end:clamp(4rem,2.5rem + 5vw,7rem); }
 /* the light page begins with a hairline, so the boundary reads as intended, not as a cut */
 .hero--dark + .section{ border-block-start:1px solid var(--border); }
 @media (max-width:600px){
