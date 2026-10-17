@@ -382,11 +382,38 @@ p{ margin:0; }
   .tab-stage{ grid-template-columns:minmax(0,1fr); gap:var(--s-3); }
 }
 
-/* the single dark band: a selected contrast area, the rest of the site stays light */
-.dark-band{ background:var(--ink); color:rgba(255,255,255,.78); }
-.dark-band h2,.dark-band h3{ color:#fff; }
-.dark-band .eyebrow{ color:var(--spark-1); }
+/* dark bands: a few contrast sections that break up the light pages. The colour tokens flip,
+   so anything inside (cards, tags, links, buttons) turns light-on-dark without its own rules. */
+.dark-band{
+  --bg:#0E0F10; --surface:#17191A; --surface-2:#202325;
+  --border:rgba(255,255,255,.12); --border-strong:rgba(255,255,255,.22);
+  --ink:#F4F2EE; --text:#C3C7CA; --muted:#9AA0A4;
+  --brand:#F4F2EE; --brand-strong:#FFFFFF; --brand-tint:rgba(255,255,255,.08);
+  background:var(--bg); color:var(--text);
+}
+.dark-band .btn--primary{ color:#111111; }
+.dark-band .btn--primary:hover{ background:#D9D9D9; }
+.dark-band :focus-visible{ outline-color:#F4F2EE; }
 .dark-band .section-head{ max-width:52rem; }
+.dark-band :is(.solution,.offer-card,.person,.demo-box,.stack-support li){ background:transparent; }
+.dark-band :is(.avatar,.tags li,.person--lead .avatar,.person--lead .tags li){ background:var(--surface-2); }
+/* a fine grid behind the dark page heads, fading out downwards */
+.grid-bg{ position:relative; isolation:isolate; }
+.grid-bg::before{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 90% at 50% 0%,#000 25%,transparent 75%); mask-image:radial-gradient(ellipse 80% 90% at 50% 0%,#000 25%,transparent 75%);
+}
+/* every section heading carries a small running number: 01, 02, ... */
+main{ counter-reset:sec; }
+.section-head::before{
+  counter-increment:sec; content:counter(sec,decimal-leading-zero);
+  display:block; margin-block-end:var(--s-2); padding-block-end:.6rem; width:3rem;
+  border-block-end:1px solid var(--border-strong);
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.8rem; letter-spacing:.08em; color:var(--muted);
+}
+.section-head--center::before{ margin-inline:auto; }
 .cap-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 var(--s-5); }
 .cap-list li{ display:grid; grid-template-columns:2.5rem minmax(0,1fr); gap:var(--s-1); padding-block:var(--s-3); border-block-start:1px solid rgba(255,255,255,.14); }
 .cap-list .n{ color:var(--spark-1); font-weight:600; font-size:.95rem; padding-block-start:.15rem; }
@@ -630,3 +657,77 @@ p{ margin:0; }
   .wa{ transition:bottom .25s ease; }
 }
 @media (max-width:760px) and (prefers-reduced-motion:reduce){ .sticky-cta,.wa{ transition:none; } }
+
+/* consulting services as a bento grid: the advisory session large, the project plan wide */
+@media (min-width:761px){
+  .offer-grid--bento{ grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr); }
+  .offer-grid--bento > :first-child{ grid-row:span 2; justify-content:space-between; }
+  .offer-grid--bento > :first-child h3{ font-size:clamp(1.5rem,1.2rem + 1vw,2rem); }
+  .offer-grid--bento > :last-child{ grid-column:span 2; }
+}
+@media (max-width:760px){
+  .offer-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .offer-grid--bento > :first-child,.offer-grid--bento > :last-child{ grid-column:span 2; }
+  .offer-card{ padding:1rem; }
+  .offer-card h3{ font-size:1.05rem; }
+  .offer-card p{ font-size:.925rem; }
+  .offer-card .text-link{ white-space:normal; font-size:.9rem; }
+}
+
+/* consultants as editorial cards: square edges, a dotted picture area, a small label above each name */
+.team-head{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:var(--s-5); align-items:end; margin-block-end:var(--s-5); }
+.team-head h2{ margin:0; }
+.team-head .lead{ margin:0; color:var(--muted); }
+.person-kicker{ margin:0 0 .6rem; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); }
+[dir="rtl"] .person-kicker{ text-align:right; }
+/* two consultants, side by side */
+.people--cards{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s-2); }
+.people--cards .person{ padding:0; gap:0; border:1px solid var(--ink); border-radius:0; background:#fff; }
+.person-body{ flex:1; display:flex; flex-direction:column; padding:1.25rem 1.25rem 1.5rem; }
+.people--cards .person h3{ font-size:1.25rem; }
+.person-role{ margin:.15rem 0 0; color:var(--muted); font-size:.95rem; }
+.people--cards .person-bio{ margin:.75rem 0 0; font-size:.95rem; }
+.people--cards .person:not(.is-open) .person-extra{ display:none; }
+.people--cards .person-extra{ display:grid; gap:var(--s-2); margin-block-start:var(--s-2); }
+.people--cards .tags li{ background:var(--surface); }
+.people--cards .person-links{ margin-block-start:auto; padding-block-start:var(--s-3); display:flex; flex-wrap:wrap; align-items:center; gap:.75rem 1rem; }
+.people--cards .person-more{ display:inline-flex; background:none; border:1px solid var(--border-strong); border-radius:999px; padding:.35rem .85rem; font:inherit; font-size:.85rem; color:var(--ink); cursor:pointer; }
+.people--cards .text-link{ white-space:normal; }
+@media (max-width:1000px){ .people--cards{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:760px){
+  .team-head{ grid-template-columns:minmax(0,1fr); gap:var(--s-2); margin-block-end:var(--s-4); }
+  .people--cards{ gap:.75rem; }
+  .person-body{ padding:1rem; }
+  .people--cards .person h3{ font-size:1.05rem; }
+  .person-role,.people--cards .person-bio{ font-size:.85rem; }
+  .people--cards .text-link{ font-size:.9rem; }
+  .people--cards .person-kicker{ font-size:.62rem; letter-spacing:.04em; white-space:nowrap; }
+}
+
+/* service and program cards, editorial like the consultant cards: square, a thin dark rule, a small mono number */
+.offer-grid{ gap:var(--s-2); }
+.offer-card{ border:1px solid var(--ink); border-radius:0; justify-content:space-between; gap:var(--s-3); transition:box-shadow .2s ease; }
+.offer-card:hover{ box-shadow:inset 0 0 0 1px var(--ink); }
+.offer-text{ display:flex; flex-direction:column; gap:.45rem; }
+.offer-grid .offer-card .num{ display:block; font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:.75rem; letter-spacing:.12em; color:var(--muted); }
+[dir="rtl"] .offer-card .num{ text-align:right; }
+.offer-card .text-link{ align-self:flex-start; }
+.chips{ list-style:none; margin:var(--s-1) 0 0; padding:0; display:flex; flex-wrap:wrap; gap:.4rem; }
+.chips li{ font-size:.8rem; padding:.3rem .8rem; border:1px solid var(--border-strong); border-radius:999px; color:var(--ink); }
+/* the advisory session: the one dark card */
+.offer-card.offer-card--feature{ background:var(--bg); border-color:var(--bg); color:var(--text); }
+.offer-card--feature h3{ font-size:clamp(1.6rem,1.25rem + 1.2vw,2.25rem); }
+.offer-card--feature p{ font-size:var(--fs-lead); max-width:28rem; }
+.offer-card--feature .btn{ align-self:flex-start; }
+.offer-card--feature.is-selected{ box-shadow:inset 0 0 0 2px #F4F2EE; }
+@media (min-width:761px){
+  .offer-grid--bento > :last-child{ flex-direction:row; align-items:flex-end; gap:var(--s-4); }
+  .offer-grid--bento > :last-child .text-link{ align-self:flex-end; flex:none; }
+}
+@media (max-width:760px){
+  .offer-card.offer-card--feature{ padding:1.5rem 1.25rem; }
+  .offer-card--feature h3{ font-size:1.5rem; }
+  .offer-card--feature p{ font-size:1rem; }
+}
+@media (prefers-reduced-motion:reduce){ .offer-card{ transition:none; } }
+
