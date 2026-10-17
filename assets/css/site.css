@@ -557,3 +557,46 @@ p{ margin:0; }
   *,*::before,*::after{ transition:none!important; animation:none!important; }
   .js .reveal{ opacity:1; transform:none; }
 }
+
+/* consulting page: service cards that pick the consultation type in the form */
+.consult-page .case-head .lead{ max-width:46rem; }
+.consult-page .case-head .btn{ margin-block-start:var(--s-4); }
+.offer-grid{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s-3); }
+.offer-card{ display:flex; flex-direction:column; gap:var(--s-1); background:#fff; border:1px solid var(--border); border-radius:var(--r-lg); padding:clamp(1.5rem,1rem + 1.5vw,2.25rem); transition:border-color .2s ease, box-shadow .2s ease; }
+.offer-card:hover{ border-color:var(--border-strong); }
+.offer-card.is-selected{ border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink); }
+.offer-card .num{ font-size:.9rem; font-weight:600; color:var(--muted); }
+.offer-card h3{ font-size:1.25rem; }
+.offer-card p{ margin:0; }
+.offer-card .text-link{ margin-block-start:auto; padding-block:var(--s-2) .25rem; align-self:flex-start; }
+.consult-page .steps p{ margin:0; }
+.field-error{ margin:0; font-size:.875rem; color:#A8460F; }
+.field [aria-invalid="true"]{ border-color:#A8460F; }
+.people{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr)); gap:var(--s-3); }
+.person{ display:flex; flex-direction:column; gap:var(--s-2); border:1px solid var(--border); border-radius:var(--r-lg); padding:clamp(1.5rem,1rem + 1.5vw,2.25rem); }
+.person p{ margin:0; }
+.person-head{ display:flex; align-items:center; gap:var(--s-2); }
+.person-head h3{ font-size:1.25rem; }
+.avatar{ flex:none; display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:var(--surface); border:1px solid var(--border); color:var(--muted); }
+.avatar svg{ width:32px; height:32px; }
+.creds{ list-style:none; margin:0; padding:0; display:grid; gap:.4rem; font-size:var(--fs-small); color:var(--ink); }
+.tags{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:.4rem; }
+.tags li{ font-size:.85rem; padding:.25rem .65rem; border-radius:999px; background:var(--surface); color:var(--text); }
+.person-links{ margin-block-start:auto; padding-block-start:var(--s-1); display:flex; flex-wrap:wrap; gap:var(--s-1) var(--s-3); }
+.person--lead{ grid-column:1/-1; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,1fr); gap:var(--s-4); background:var(--surface); }
+.person--lead .avatar{ background:#fff; }
+.person-main,.person-side{ display:flex; flex-direction:column; gap:var(--s-3); }
+.person-side{ padding-inline-start:var(--s-4); border-inline-start:1px solid var(--border); }
+.person-bio{ display:grid; gap:var(--s-1); }
+.person-label{ margin:0 0 .5rem; font-size:.8rem; font-weight:600; color:var(--muted); }
+.person--lead .tags li{ background:#fff; }
+@media (max-width:900px){
+  .person--lead{ grid-template-columns:minmax(0,1fr); }
+  .person-side{ padding-inline-start:0; border-inline-start:0; padding-block-start:var(--s-3); border-block-start:1px solid var(--border); }
+}
+@media (max-width:760px){ .offer-grid{ grid-template-columns:minmax(0,1fr); } }
+@media (prefers-reduced-motion:reduce){ .offer-card{ transition:none; } }
+.consult-page .steps{ grid-template-columns:repeat(2,minmax(0,1fr)); max-width:56rem; }
+@media (max-width:520px){ .consult-page .steps{ grid-template-columns:minmax(0,1fr); } }
+
+.consult-page .sub-head{ margin-block-start:var(--s-6); }

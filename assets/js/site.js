@@ -6,24 +6,28 @@
   root.classList.add('js');
   var AR = (root.lang || 'ar').slice(0, 2) === 'ar';
 
-  /* header: solutions menu and the mobile panel */
+  /* header: the dropdown menus and the mobile panel */
   var header = document.querySelector('.site-header');
-  var menu = document.querySelector('.has-menu');
-  var menuBtn = menu && menu.querySelector('button');
+  var menus = [].slice.call(document.querySelectorAll('.has-menu'));
   var burger = header && header.querySelector('.burger');
-  function setMenu(open) {
-    if (!menu) return;
-    open ? menu.setAttribute('data-open', '') : menu.removeAttribute('data-open');
-    menuBtn.setAttribute('aria-expanded', open);
+  // setMenu(false) closes every dropdown; opening one closes the others.
+  function setMenu(open, which) {
+    menus.forEach(function (m) {
+      var on = open && m === which;
+      on ? m.setAttribute('data-open', '') : m.removeAttribute('data-open');
+      m.querySelector('button').setAttribute('aria-expanded', on);
+    });
   }
   function setPanel(open) {
     if (!header) return;
     open ? header.setAttribute('data-open', '') : header.removeAttribute('data-open');
     burger.setAttribute('aria-expanded', open);
   }
-  if (menuBtn) menuBtn.addEventListener('click', function (e) { e.stopPropagation(); setMenu(!menu.hasAttribute('data-open')); });
+  menus.forEach(function (m) {
+    m.querySelector('button').addEventListener('click', function (e) { e.stopPropagation(); setMenu(!m.hasAttribute('data-open'), m); });
+  });
   if (burger) burger.addEventListener('click', function () { setPanel(!header.hasAttribute('data-open')); });
-  document.addEventListener('click', function (e) { if (menu && !menu.contains(e.target)) setMenu(false); });
+  document.addEventListener('click', function (e) { if (!menus.some(function (m) { return m.contains(e.target); })) setMenu(false); });
   // Following an in-page link closes whatever was open.
   [].forEach.call(document.querySelectorAll('.nav-links a[href^="#"], .menu a[href^="#"]'), function (a) {
     a.addEventListener('click', function () { setMenu(false); setPanel(false); });
@@ -34,10 +38,48 @@
   var form = document.getElementById('enquiry-form');
   var msg = document.getElementById('form-msg');
   var lastFocus = null;
+  // The consulting page: the card whose service is chosen in the form is marked.
+  var services = document.querySelectorAll('[data-service]');
+  function markService() {
+    [].forEach.call(services, function (c) { c.classList.toggle('is-selected', c.getAttribute('data-service') === form.purpose.value); });
+  }
+  if (form && services.length) form.purpose.addEventListener('change', markService);
+
+  // Forms marked data-validate check their fields here and say what is wrong under each one.
+  var validate = form && form.hasAttribute('data-validate');
+  function errorEl(f) {
+    var id = f.id + '-error', el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'field-error'; el.id = id;
+      f.closest('.field').appendChild(el);
+    }
+    return el;
+  }
+  function clearError(f) {
+    if (!validate || !f.id) return;
+    var el = document.getElementById(f.id + '-error');
+    if (el) el.remove();
+    f.removeAttribute('aria-invalid'); f.removeAttribute('aria-describedby');
+  }
+  function checkField(f) {
+    var v = f.value.trim(), text = '';
+    if (f.required && !v) text = form.getAttribute(f.tagName === 'SELECT' ? 'data-pick' : 'data-required');
+    else if (f.type === 'email' && v && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) text = form.getAttribute('data-bad-email');
+    if (!text) { clearError(f); return true; }
+    errorEl(f).textContent = text;
+    f.setAttribute('aria-invalid', 'true'); f.setAttribute('aria-describedby', f.id + '-error');
+    return false;
+  }
+  if (validate) [].forEach.call(form.querySelectorAll('[required], [type=email]'), function (f) {
+    f.addEventListener(f.tagName === 'SELECT' ? 'change' : 'blur', function () { if (f.value.trim() || f.hasAttribute('aria-invalid')) checkField(f); });
+    f.addEventListener('input', function () { if (f.hasAttribute('aria-invalid')) checkField(f); });
+  });
+
   // The homepage carries the form on the page; other pages still open it in a dialog.
   function openForm(purpose) {
     setPanel(false);
-    if (purpose) form.purpose.value = purpose;
+    if (purpose) { form.purpose.value = purpose; markService(); clearError(form.purpose); }
     if (!ovl) {
       var calm = document.visibilityState !== 'visible' || matchMedia('(prefers-reduced-motion: reduce)').matches;
       form.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
@@ -55,7 +97,11 @@
     if (lastFocus) lastFocus.focus();
   }
   if (form) [].forEach.call(document.querySelectorAll('[data-open-form]'), function (el) {
-    el.addEventListener('click', function (e) { e.preventDefault(); openForm(el.getAttribute('data-open-form')); });
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (el.hasAttribute('data-consultant') && form.consultant) form.consultant.value = el.getAttribute('data-consultant');
+      openForm(el.getAttribute('data-open-form'));
+    });
   });
   if (ovl) {
     ovl.querySelector('.x').addEventListener('click', closeForm);
@@ -119,18 +165,24 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var btn = form.querySelector('[type=submit]');
+    if (btn.disabled) return;
+    if (validate) {
+      var bad = [].filter.call(form.querySelectorAll('[required], [type=email]'), function (f) { return !checkField(f); });
+      if (bad.length) { bad[0].focus(); return; }
+    }
     btn.disabled = true;
     msg.removeAttribute('data-state'); msg.textContent = '';
     fetch('https://formsubmit.co/ajax/info@autoxtion.com', { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function () {
         msg.setAttribute('data-state', 'ok');
-        msg.textContent = AR ? 'وصل طلبك، وسنتواصل معك قريبا.' : 'Your request has been received. We will be in touch shortly.';
+        msg.textContent = form.getAttribute('data-ok') || (AR ? 'وصل طلبك، وسنتواصل معك قريبا.' : 'Your request has been received. We will be in touch shortly.');
         form.reset(); form.phone_code.value = '+966';
+        if (services.length) markService();
       })
       .catch(function () {
         msg.setAttribute('data-state', 'error');
-        msg.textContent = AR ? 'تعذر الإرسال. حاول مرة أخرى أو راسلنا عبر واتساب.' : 'Sending failed. Please try again or message us on WhatsApp.';
+        msg.textContent = form.getAttribute('data-error') || (AR ? 'تعذر الإرسال. حاول مرة أخرى أو راسلنا عبر واتساب.' : 'Sending failed. Please try again or message us on WhatsApp.');
       })
       .then(function () { btn.disabled = false; });
   });
