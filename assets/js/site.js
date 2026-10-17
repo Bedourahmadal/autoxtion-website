@@ -188,6 +188,28 @@
   });
   }
 
+  /* consulting page on phones: consultant details on demand, and a request button kept at hand */
+  [].forEach.call(document.querySelectorAll('.person-more'), function (b) {
+    b.addEventListener('click', function () {
+      var open = b.closest('.person').classList.toggle('is-open');
+      b.setAttribute('aria-expanded', open);
+      b.textContent = b.getAttribute(open ? 'data-less' : 'data-more');
+    });
+  });
+  // Shown once the opening button has scrolled away, and hidden again when the form itself is on screen.
+  var sticky = document.querySelector('.sticky-cta'), hero = document.querySelector('.case-head'), request = document.getElementById('request');
+  if (sticky && hero && request && 'IntersectionObserver' in window) {
+    var heroSeen = true, formSeen = false;
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.target === hero) heroSeen = e.isIntersecting; else formSeen = e.isIntersecting; });
+      document.body.classList.toggle('show-sticky', !heroSeen && !formSeen);
+    }).observe(hero);
+    new IntersectionObserver(function (es) {
+      formSeen = es[0].isIntersecting;
+      document.body.classList.toggle('show-sticky', !heroSeen && !formSeen);
+    }).observe(request);
+  }
+
   /* WhatsApp */
   var wa = document.getElementById('wa');
   if (wa) wa.href = 'https://wa.me/966562356520?text=' + encodeURIComponent(AR ? 'مرحبا AUTOXTION، أرغب بالتعرف على خدماتكم.' : 'Hello AUTOXTION, I would like to learn more about your work.');
