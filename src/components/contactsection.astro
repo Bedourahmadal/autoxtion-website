@@ -26,10 +26,6 @@ const label = "text-[0.925rem] font-semibold text-[#111]";
     <div>
       <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">{title}</h2>
       <p class="text-lg mt-4 text-slate-600">{lead}</p>
-      <p class="mt-4 text-sm text-slate-500">
-        <a href={`mailto:${CONTACT.email}`} dir="ltr" class="hover:underline">{CONTACT.email}</a>
-        {CONTACT.phones.map((p) => <> · <a href={`tel:${p.replace(/\s/g, "")}`} dir="ltr" class="hover:underline">{p}</a></>)}
-      </p>
     </div>
     <form
       id="enquiry-form"
