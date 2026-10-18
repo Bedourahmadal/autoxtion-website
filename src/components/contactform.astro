@@ -1,0 +1,86 @@
+---
+// The template's contact form, sending through FormSubmit like the old site (copies to the team),
+// with the fields our requests need. site.ts checks the fields and shows the result.
+import { UI, CONTACT, type Lang } from "@/lib/i18n";
+
+interface Props {
+  lang: Lang;
+  subject: string;
+  aria: string;
+  labels: { name: string; company: string; email: string; phone: string; purpose: string; notes: string };
+  choose: string;
+  purposes: string[];
+  send: string;
+  notesPlaceholder?: string;
+  notesRequired?: boolean;
+  emailRequired?: boolean;
+  phoneRequired?: boolean;
+  consultants?: { label: string; none: string; names: string[] };
+  ok?: string;
+  error?: string;
+  required?: string;
+  pick?: string;
+}
+
+const p = Astro.props;
+const t = UI[p.lang];
+const field =
+  "w-full text-base text-[#111] bg-white border border-[#C8C8C8] rounded-lg px-3.5 py-3 min-h-12 focus:outline-2 focus:outline-black focus:border-black";
+const label = "text-[0.925rem] font-semibold text-[#111]";
+---
+
+<form
+  id="enquiry-form"
+  class="bg-white border border-[#E2E2E2] rounded-xl p-6 md:p-10"
+  aria-label={p.aria}
+  novalidate
+  data-ok={p.ok ?? t.ok}
+  data-error={p.error ?? t.error}
+  data-required={p.required ?? t.required}
+  data-bad-email={t.badEmail}
+  data-pick={p.pick ?? t.pick}>
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-name" class={label}>{p.labels.name}</label>
+    <input id="f-name" type="text" required class={field} name="name" autocomplete="name" />
+  </div>
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-company" class={label}>{p.labels.company} <span class="text-sm font-normal text-slate-500">{t.optional}</span></label>
+    <input id="f-company" type="text" class={field} name="company" autocomplete="organization" />
+  </div>
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-email" class={label}>{p.labels.email}</label>
+    <input id="f-email" type="email" placeholder="name@company.com" name="email" required={p.emailRequired} class={field} dir="ltr" inputmode="email" autocomplete="email" />
+  </div>
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-phone" class={label}>{p.labels.phone}</label>
+    <div class="flex gap-2" dir="ltr">
+      <select name="phone_code" aria-label={t.cc} data-phone-codes class={field.replace("w-full ", "") + " w-32 shrink-0 px-2"}></select>
+      <input id="f-phone" type="tel" placeholder="5X XXX XXXX" name="phone" required={p.phoneRequired} class={field} inputmode="tel" autocomplete="tel-national" />
+    </div>
+  </div>
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-purpose" class={label}>{p.labels.purpose}</label>
+    <select id="f-purpose" name="purpose" required class={field}>
+      <option value="">{p.choose}</option>
+      {p.purposes.map((o) => <option>{o}</option>)}
+    </select>
+  </div>
+  {p.consultants && (
+    <div class="mb-4 grid gap-1.5" data-field>
+      <label for="f-consultant" class={label}>{p.consultants.label} <span class="text-sm font-normal text-slate-500">{t.optional}</span></label>
+      <select id="f-consultant" name="consultant" class={field}>
+        <option value="">{p.consultants.none}</option>
+        {p.consultants.names.map((n) => <option>{n}</option>)}
+      </select>
+    </div>
+  )}
+  <div class="mb-4 grid gap-1.5" data-field>
+    <label for="f-notes" class={label}>{p.labels.notes}</label>
+    <textarea id="f-notes" name="notes" required={p.notesRequired} placeholder={p.notesPlaceholder} class={field + " min-h-28 resize-y"}></textarea>
+  </div>
+  <input type="hidden" name="_cc" value={CONTACT.cc} />
+  <input type="hidden" name="_subject" value={p.subject} />
+  <input type="hidden" name="_template" value="table" />
+  <button type="submit" class="mt-2 w-full rounded-lg bg-black text-white font-semibold px-6 py-3.5 hover:bg-gray-800 transition disabled:opacity-60">{p.send}</button>
+  <div id="form-msg" role="status" class="mt-3 text-center data-[state=error]:text-red-500 data-[state=ok]:text-green-600"></div>
+</form>

@@ -1,0 +1,57 @@
+---
+import Container from "@/components/container.astro";
+import ContactSection from "@/components/contactsection.astro";
+import Hero from "@/components/hero.astro";
+import SolutionCards from "@/components/solutioncards.astro";
+import SectorTabs from "@/components/sectortabs.astro";
+import Link from "@/components/ui/link.astro";
+import Layout from "@/layouts/Layout.astro";
+import { href, type Lang } from "@/lib/i18n";
+import data from "@/data/home.json";
+
+const { lang } = Astro.props as { lang: Lang };
+const d = data[lang];
+const arrow = lang === "ar" ? "←" : "→";
+---
+
+<Layout lang={lang} title={d.title} description={d.description}>
+  <Hero
+    eyebrow={d.hero.eyebrow}
+    title={d.hero.h1}
+    lead={d.hero.lead}
+    primary={{ text: d.hero.cta, href: "#contact" }}
+    secondary={{ text: d.hero.cta2, href: "#solutions" }}
+    tags={d.stack.core}
+  />
+
+  <SolutionCards
+    id="solutions"
+    title={d.solutions_title}
+    arrow={arrow}
+    cards={d.solutions.map((s) => ({ href: href(lang, `solutions/${s.slug}/`), image: s.image, alt: s.alt, title: s.title, text: s.text, more: s.more }))}
+  />
+
+  <Container>
+    <div class="mt-16 grid md:grid-cols-[1fr_auto] gap-6 items-center bg-white border border-[#E2E2E2] border-s-[3px] border-s-black rounded-xl p-8 md:p-10">
+      <div>
+        <h2 class="text-2xl font-bold">{d.consult.title}</h2>
+        <p class="mt-2 text-slate-600 leading-relaxed">{d.consult.text}</p>
+      </div>
+      <Link href={href(lang, "consulting/")}>{d.consult.cta}</Link>
+    </div>
+  </Container>
+
+  <SectorTabs id="sectors" title={d.sectors_title} lead={d.sectors_lead} imageAlt={d.sectors_image_alt} sectors={d.sectors} />
+
+
+  <ContactSection
+    lang={lang}
+    title={d.contact.title}
+    lead={d.contact.lead}
+    aria={d.contact.aria}
+    labels={d.contact.labels}
+    choose={d.contact.choose}
+    purposes={d.contact.purposes}
+    send={d.contact.send}
+  />
+</Layout>

@@ -1,0 +1,64 @@
+---
+import { SEO } from "astro-seo";
+import Footer from "@/components/footer.astro";
+import Navbar from "@/components/navbar/navbar.astro";
+import WhatsApp from "@/components/whatsapp.astro";
+import { UI, otherLang, type Lang } from "@/lib/i18n";
+import "@fontsource-variable/inter/index.css";
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/alexandria";
+import "../styles/global.css";
+
+export interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+}
+
+const { lang, title, description } = Astro.props;
+const path = Astro.url.pathname;
+const arPath = lang === "ar" ? path : otherLang("en", path);
+const enPath = lang === "en" ? path : otherLang("ar", path);
+const canonicalURL = new URL(path, Astro.site).toString();
+const resolvedImageWithDomain = new URL("/assets/img/og-autoxtion.jpg", Astro.site).toString();
+---
+
+<!doctype html>
+<html lang={lang} dir={UI[lang].dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="alternate" hreflang="ar" href={new URL(arPath, Astro.site).toString()} />
+    <link rel="alternate" hreflang="en" href={new URL(enPath, Astro.site).toString()} />
+    <link rel="alternate" hreflang="x-default" href={new URL(arPath, Astro.site).toString()} />
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonicalURL}
+      twitter={{ card: "summary_large_image" }}
+      openGraph={{
+        basic: { url: canonicalURL, type: "website", title, image: resolvedImageWithDomain },
+        image: { alt: "AUTOXTION" },
+        optional: { siteName: "AUTOXTION", locale: lang === "ar" ? "ar_SA" : "en_US", description },
+      }}
+    />
+  </head>
+  <body>
+    <Navbar lang={lang} />
+    <slot />
+    <Footer lang={lang} />
+    <WhatsApp lang={lang} />
+    <style is:global>
+      /* Improve Page speed */
+      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+      img {
+        content-visibility: auto;
+      }
+    </style>
+    <script>
+      import "../scripts/site.ts";
+    </script>
+  </body>
+</html>

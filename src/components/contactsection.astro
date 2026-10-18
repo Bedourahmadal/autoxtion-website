@@ -1,0 +1,69 @@
+---
+// The last part of the earlier homepage: "Contact us", with the form on the page.
+// Same fields, same receiver (FormSubmit, with copies to the team); site.ts checks and sends it.
+import { UI, CONTACT, type Lang } from "@/lib/i18n";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  lead: string;
+  aria: string;
+  labels: string[];
+  choose: string;
+  purposes: string[];
+  send: string;
+}
+const { lang, title, lead, aria, labels, choose, purposes, send } = Astro.props;
+const t = UI[lang];
+const [nameL, companyL, emailL, phoneL, purposeL, notesL] = labels;
+const input =
+  "w-full text-base text-[#111] bg-white border border-[#C8C8C8] rounded-lg px-3.5 py-3 min-h-12 focus:outline-2 focus:outline-black focus:border-black";
+const label = "text-[0.925rem] font-semibold text-[#111]";
+---
+
+<section id="contact" class="py-20 scroll-mt-8">
+  <div class="max-w-(--breakpoint-xl) mx-auto px-5 grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-20 items-start">
+    <div>
+      <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">{title}</h2>
+      <p class="text-lg mt-4 text-slate-600">{lead}</p>
+      <p class="mt-4 text-sm text-slate-500">
+        <a href={`mailto:${CONTACT.email}`} dir="ltr" class="hover:underline">{CONTACT.email}</a>
+        {CONTACT.phones.map((p) => <> · <a href={`tel:${p.replace(/\s/g, "")}`} dir="ltr" class="hover:underline">{p}</a></>)}
+      </p>
+    </div>
+    <form
+      id="enquiry-form"
+      aria-label={aria}
+      novalidate
+      class="bg-white border border-[#E2E2E2] rounded-xl p-6 md:p-10 grid gap-4"
+      data-ok={t.ok}
+      data-error={t.error}
+      data-required={t.required}
+      data-bad-email={t.badEmail}
+      data-pick={t.pick}>
+      <div class="grid gap-1.5" data-field><label for="f-name" class={label}>{nameL}</label><input id="f-name" name="name" required autocomplete="name" class={input} /></div>
+      <div class="grid gap-1.5" data-field><label for="f-company" class={label}>{companyL}</label><input id="f-company" name="company" autocomplete="organization" class={input} /></div>
+      <div class="grid gap-1.5" data-field><label for="f-email" class={label}>{emailL}</label><input id="f-email" name="email" type="email" required dir="ltr" inputmode="email" autocomplete="email" placeholder="name@company.com" class={input} /></div>
+      <div class="grid gap-1.5" data-field>
+        <label for="f-phone" class={label}>{phoneL}</label>
+        <div class="flex gap-2" dir="ltr">
+          <select name="phone_code" aria-label={t.cc} data-phone-codes class={input.replace("w-full ", "") + " w-30 shrink-0"}></select>
+          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="5X XXX XXXX" class={input} />
+        </div>
+      </div>
+      <div class="grid gap-1.5" data-field>
+        <label for="f-purpose" class={label}>{purposeL}</label>
+        <select id="f-purpose" name="purpose" class={input}><option value="">{choose}</option>{purposes.map((o) => <option>{o}</option>)}</select>
+      </div>
+      <div class="grid gap-1.5" data-field>
+        <label for="f-notes" class={label}>{notesL.replace(/\s*\(.*\)$/, "")} <span class="text-sm font-normal text-slate-500">{t.optional}</span></label>
+        <textarea id="f-notes" name="notes" rows="3" class={input + " min-h-22 resize-y"}></textarea>
+      </div>
+      <input type="hidden" name="_cc" value={CONTACT.cc} />
+      <input type="hidden" name="_subject" value="New Demo Request - Autoxtion" />
+      <input type="hidden" name="_template" value="table" />
+      <button type="submit" class="mt-2 w-full rounded-lg bg-black text-white font-semibold px-6 py-3.5 hover:bg-gray-800 transition disabled:opacity-60">{send}</button>
+      <p id="form-msg" role="status" class="text-[0.95rem] data-[state=error]:text-[#A8460F] data-[state=ok]:font-semibold"></p>
+    </form>
+  </div>
+</section>

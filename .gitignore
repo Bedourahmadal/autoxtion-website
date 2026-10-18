@@ -1,3 +1,7 @@
-.DS_Store
-Thumbs.db
 *.log
+.DS_Store
+.astro/
+.env
+Thumbs.db
+dist/
+node_modules/

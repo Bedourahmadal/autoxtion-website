@@ -1,0 +1,288 @@
+{
+  "training-simulation": {
+    "ar": {
+      "title": "التدريب والمحاكاة الغامرة — AUTOXTION",
+      "description": "بيئات تدريب بالواقع الافتراضي والمختلط، يمارس فيها المتدرب الإجراء في ظروف تحاكي الواقع، ويقاس أداؤه في كل قرار.",
+      "crumb": "التدريب والمحاكاة الغامرة",
+      "h1": "التدريب والمحاكاة الغامرة",
+      "lead": "بيئات تدريب بالواقع الافتراضي والمختلط، يمارس فيها المتدرب الإجراء في ظروف تحاكي الواقع، ويقاس أداؤه في كل قرار.",
+      "hero": {
+        "image": "solution-training",
+        "alt": "متدرب بنظارة واقع مختلط يتعامل مع صمام افتراضي داخل قاعة تدريب"
+      },
+      "includes_title": "ما يشمله",
+      "tech_title": "التقنيات",
+      "for_title": "لمن",
+      "items": [
+        {
+          "title": "سيناريوهات السلامة والطوارئ",
+          "text": "مبنية على الاشتراطات النظامية المحلية."
+        },
+        {
+          "title": "تشغيل المعدات والإجراءات",
+          "text": "تدريب على الإجراء خطوة بخطوة داخل محاكاة للموقع."
+        },
+        {
+          "title": "التقييم وتقارير الأداء",
+          "text": "كل قرار وتوقيته في تقرير واضح للمشرف."
+        },
+        {
+          "title": "تحويل الحقائب التدريبية",
+          "text": "من محتوى يقرأ إلى تجربة تمارس."
+        }
+      ],
+      "why": {
+        "title": "تدرب داخل الموقف، لا أمام الشرائح",
+        "text": "المواقف التي تهم فعلا، كحريق في موقع تشغيل أو إجراء نادر، يصعب التدرب عليها بأمان في الواقع. في المحاكاة يتخذ المتدرب القرار بنفسه دون تعريض الأفراد أو المعدات للخطر، ويعرف المشرف من هو جاهز قبل الميدان."
+      },
+      "tech": [
+        "الواقع الافتراضي",
+        "الواقع المختلط",
+        "قياس الأداء"
+      ],
+      "who": [
+        "الصناعة والطاقة",
+        "الأمن والسلامة",
+        "مراكز التدريب"
+      ],
+      "demo_title": "شاهدها في جلسة عرض",
+      "demo_text": "جلسة 30 دقيقة مع فريقنا، نعرض فيها التجربة ونناقش احتياجك.",
+      "demo_cta": "اطلب جلسة عرض"
+    },
+    "en": {
+      "title": "Immersive Training & Simulation — AUTOXTION",
+      "description": "VR and mixed-reality training environments where trainees practise a procedure under realistic conditions, and every decision is measured.",
+      "crumb": "Immersive Training & Simulation",
+      "h1": "Immersive Training & Simulation",
+      "lead": "VR and mixed-reality training environments where trainees practise a procedure under realistic conditions, and every decision is measured.",
+      "hero": {
+        "image": "solution-training",
+        "alt": "A trainee in a mixed-reality headset working a virtual valve inside a training room"
+      },
+      "includes_title": "What it includes",
+      "tech_title": "Technologies",
+      "for_title": "Who it is for",
+      "items": [
+        {
+          "title": "Safety and emergency scenarios",
+          "text": "Built on local regulatory requirements."
+        },
+        {
+          "title": "Equipment and procedures",
+          "text": "Step-by-step practice inside a simulation of the site."
+        },
+        {
+          "title": "Assessment and reports",
+          "text": "Every decision and its timing in a clear report for the supervisor."
+        },
+        {
+          "title": "Converting training material",
+          "text": "From content that is read to an experience that is practised."
+        }
+      ],
+      "why": {
+        "title": "Train inside the situation, not in front of slides",
+        "text": "The situations that matter most, such as a fire at an operating site or a rare procedure, are hard to practise safely in reality. In a simulation trainees make the call themselves without putting people or equipment at risk, and supervisors know who is ready before the field."
+      },
+      "tech": [
+        "Virtual reality",
+        "Mixed reality",
+        "Performance measurement"
+      ],
+      "who": [
+        "Industry & Energy",
+        "Safety & Security",
+        "Training centres"
+      ],
+      "demo_title": "See it in a demo session",
+      "demo_text": "A 30-minute session with our team to show the experience and discuss your needs.",
+      "demo_cta": "Request a demo"
+    }
+  },
+  "immersive-learning": {
+    "ar": {
+      "title": "التعلم الغامر — AUTOXTION",
+      "description": "دروس تفاعلية ونماذج ثلاثية الأبعاد ومحاكاة، يتعلم فيها الطالب بالاستكشاف والممارسة بدل الحفظ.",
+      "crumb": "التعلم الغامر",
+      "h1": "التعلم الغامر",
+      "lead": "دروس تفاعلية ونماذج ثلاثية الأبعاد ومحاكاة، يتعلم فيها الطالب بالاستكشاف والممارسة بدل الحفظ.",
+      "hero": {
+        "image": "solution-learning",
+        "alt": "طلاب في مختبر هندسي يستكشفون نموذجا ثلاثي الأبعاد لمحرك"
+      },
+      "includes_title": "ما يشمله",
+      "tech_title": "التقنيات",
+      "for_title": "لمن",
+      "items": [
+        {
+          "title": "دروس غامرة",
+          "text": "مبنية على المنهج وتكمله."
+        },
+        {
+          "title": "مختبرات افتراضية",
+          "text": "تجارب ومحاكاة آمنة دون مواد أو مخاطر."
+        },
+        {
+          "title": "نماذج ثلاثية الأبعاد",
+          "text": "يستكشفها الطالب من كل زاوية."
+        },
+        {
+          "title": "الواقع المعزز",
+          "text": "داخل الفصل ومن جوال الطالب."
+        }
+      ],
+      "why": null,
+      "tech": [
+        "الواقع الافتراضي",
+        "الواقع المعزز",
+        "النمذجة ثلاثية الأبعاد"
+      ],
+      "who": [
+        "المدارس والجامعات",
+        "الجهات التعليمية",
+        "مراكز التدريب"
+      ],
+      "demo_title": "شاهدها في جلسة عرض",
+      "demo_text": "جلسة 30 دقيقة مع فريقنا، نعرض فيها التجربة ونناقش احتياجك.",
+      "demo_cta": "اطلب جلسة عرض"
+    },
+    "en": {
+      "title": "Immersive Learning — AUTOXTION",
+      "description": "Interactive lessons, 3D models and simulations, where students learn by exploring and doing rather than memorising.",
+      "crumb": "Immersive Learning",
+      "h1": "Immersive Learning",
+      "lead": "Interactive lessons, 3D models and simulations, where students learn by exploring and doing rather than memorising.",
+      "hero": {
+        "image": "solution-learning",
+        "alt": "Students in an engineering lab exploring a 3D model of an engine"
+      },
+      "includes_title": "What it includes",
+      "tech_title": "Technologies",
+      "for_title": "Who it is for",
+      "items": [
+        {
+          "title": "Immersive lessons",
+          "text": "Built on the curriculum, and adding to it."
+        },
+        {
+          "title": "Virtual labs",
+          "text": "Safe experiments and simulations, with no materials or risk."
+        },
+        {
+          "title": "3D models",
+          "text": "Explored by students from every angle."
+        },
+        {
+          "title": "Augmented reality",
+          "text": "In the classroom and on the student’s phone."
+        }
+      ],
+      "why": null,
+      "tech": [
+        "Virtual reality",
+        "Augmented reality",
+        "3D modelling"
+      ],
+      "who": [
+        "Schools & universities",
+        "Education authorities",
+        "Training centres"
+      ],
+      "demo_title": "See it in a demo session",
+      "demo_text": "A 30-minute session with our team to show the experience and discuss your needs.",
+      "demo_cta": "Request a demo"
+    }
+  },
+  "interactive-xr": {
+    "ar": {
+      "title": "التجارب التفاعلية بالواقع الممتد — AUTOXTION",
+      "description": "تجارب بالواقع المعزز والافتراضي والمختلط تضيف طبقة رقمية إلى المكان أو العمل الفني أو المنتج.",
+      "crumb": "التجارب التفاعلية بالواقع الممتد",
+      "h1": "التجارب التفاعلية بالواقع الممتد",
+      "lead": "تجارب بالواقع المعزز والافتراضي والمختلط تضيف طبقة رقمية إلى المكان أو العمل الفني أو المنتج.",
+      "hero": {
+        "image": "solution-xr",
+        "alt": "زائر في متحف يوجه جهازه اللوحي نحو إناء فخاري أثري، فيظهر على الشاشة نموذجه الرقمي وتفاصيله"
+      },
+      "includes_title": "ما يشمله",
+      "tech_title": "التقنيات",
+      "for_title": "لمن",
+      "items": [
+        {
+          "title": "تجارب الزوار والمعارض",
+          "text": "تروي قصة المكان للزائر."
+        },
+        {
+          "title": "مرشدون وشخصيات رقمية",
+          "text": "تجيب عن الأسئلة، وتتحاور بالذكاء الاصطناعي عند الحاجة."
+        },
+        {
+          "title": "السرد المكاني والأعمال التفاعلية",
+          "text": "محتوى يتفاعل مع المكان ومع الزائر."
+        },
+        {
+          "title": "واقع معزز من المتصفح",
+          "text": "دون تنزيل تطبيق."
+        }
+      ],
+      "why": null,
+      "tech": [
+        "الواقع المعزز",
+        "الواقع الافتراضي والمختلط",
+        "الذكاء الاصطناعي"
+      ],
+      "who": [
+        "الثقافة والتراث",
+        "المتاحف والمعارض"
+      ],
+      "demo_title": "شاهدها في جلسة عرض",
+      "demo_text": "جلسة 30 دقيقة مع فريقنا، نعرض فيها التجربة ونناقش احتياجك.",
+      "demo_cta": "اطلب جلسة عرض"
+    },
+    "en": {
+      "title": "Interactive XR Experiences — AUTOXTION",
+      "description": "AR, VR and MR experiences that add a digital layer to a place, an artwork or a product.",
+      "crumb": "Interactive XR Experiences",
+      "h1": "Interactive XR Experiences",
+      "lead": "AR, VR and MR experiences that add a digital layer to a place, an artwork or a product.",
+      "hero": {
+        "image": "solution-xr",
+        "alt": "A museum visitor pointing a tablet at an ancient clay vessel, with its digital model and details on the screen"
+      },
+      "includes_title": "What it includes",
+      "tech_title": "Technologies",
+      "for_title": "Who it is for",
+      "items": [
+        {
+          "title": "Visitor and exhibition experiences",
+          "text": "Telling visitors the story of the place."
+        },
+        {
+          "title": "Digital guides and characters",
+          "text": "Answering questions, and holding a conversation with AI where it helps."
+        },
+        {
+          "title": "Spatial storytelling and interactive art",
+          "text": "Content that responds to the place and the visitor."
+        },
+        {
+          "title": "Browser-based AR",
+          "text": "No app to install."
+        }
+      ],
+      "why": null,
+      "tech": [
+        "Augmented reality",
+        "Virtual & mixed reality",
+        "Artificial intelligence"
+      ],
+      "who": [
+        "Culture & Heritage",
+        "Museums & exhibitions"
+      ],
+      "demo_title": "See it in a demo session",
+      "demo_text": "A 30-minute session with our team to show the experience and discuss your needs.",
+      "demo_cta": "Request a demo"
+    }
+  }
+}

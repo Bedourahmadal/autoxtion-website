@@ -1,0 +1,334 @@
+{
+  "ar": {
+    "title": "AUTOXTION — تجارب غامرة ذكية",
+    "description": "نصمم ونطور تجارب غامرة ذكية بتقنيات الواقع الممتد والذكاء الاصطناعي للتدريب والتعلم والتفاعل: للصناعة والطاقة، والتدريب، والتعليم، والثقافة والتراث.",
+    "hero": {
+      "eyebrow": "تجارب غامرة ذكية",
+      "h1": "نحول المعرفة إلى تجربة",
+      "lead": "نصمم ونطور تجارب غامرة ذكية تجمع بين تقنيات الواقع الممتد والذكاء الاصطناعي، لدعم التدريب والتعلم والتفاعل.",
+      "cta": "تواصل معنا",
+      "cta2": "استكشف حلولنا"
+    },
+    "ready": {
+      "title": "نحو جاهزية تبنى بالممارسة",
+      "text": "نطور بيئات تدريب ومحاكاة غامرة تحول الإجراءات والسيناريوهات إلى ممارسة تطبيقية، مع إمكانات لقياس الأداء وتوثيق نتائج التدريب.",
+      "cta": "اطلب جلسة عرض · 30 دقيقة",
+      "cta_purpose": "جلسة عرض لمشروع",
+      "image": "feature-train",
+      "alt": "متدرب يرتدي نظارة الواقع الافتراضي يتمرن على إغلاق صمام في منشأة محاكاة، ومدرب يتابع أداءه على جهاز لوحي"
+    },
+    "solutions_title": "حلولنا",
+    "solutions": [
+      {
+        "slug": "training-simulation",
+        "image": "solution-training",
+        "alt": "متدرب بنظارة واقع مختلط يتعامل مع صمام افتراضي داخل قاعة تدريب",
+        "title": "التدريب والمحاكاة الغامرة",
+        "text": "بيئات محاكاة للإجراءات التشغيلية وتشغيل المعدات وسيناريوهات السلامة والطوارئ.",
+        "more": "التفاصيل"
+      },
+      {
+        "slug": "immersive-learning",
+        "image": "solution-learning",
+        "alt": "طلاب في مختبر هندسي يستكشفون نموذجا ثلاثي الأبعاد لمحرك",
+        "title": "التعلم الغامر",
+        "text": "تجارب تعليمية تحول المحتوى إلى نماذج ثلاثية الأبعاد ومحاكاة ومختبرات افتراضية.",
+        "more": "التفاصيل"
+      },
+      {
+        "slug": "interactive-xr",
+        "image": "solution-xr",
+        "alt": "زائر في متحف يوجه جهازه اللوحي نحو إناء فخاري أثري، فيظهر على الشاشة نموذجه الرقمي وتفاصيله",
+        "title": "التجارب التفاعلية بالواقع الممتد",
+        "text": "تجارب بالواقع المعزز والافتراضي والمختلط تضيف طبقات رقمية تفاعلية إلى الأماكن والمحتوى والعناصر المادية.",
+        "more": "التفاصيل"
+      }
+    ],
+    "sectors_title": "القطاعات",
+    "sectors_lead": "حلول قابلة للتكيف مع متطلبات القطاعات المختلفة.",
+    "sectors_image_alt": "مشهد يجمع قطاعات AUTOXTION: منشأة صناعية، وتدريب على الطوارئ، وقاعة تعليمية، وموقع تراثي",
+    "sectors": [
+      {
+        "name": "الصناعة والطاقة",
+        "text": "تدريب على الإجراءات التشغيلية والسلامة والاستجابة للطوارئ، مبني على الاشتراطات النظامية المحلية، داخل محاكاة للموقع نفسه، دون تعريض الأفراد أو المعدات للخطر، مع تقييم موثق لأداء كل متدرب.",
+        "points": [
+          "تشغيل المعدات والإجراءات التشغيلية",
+          "سيناريوهات السلامة والطوارئ، مبنية على الاشتراطات النظامية المحلية",
+          "التقييم الآلي وتقارير الأداء"
+        ]
+      },
+      {
+        "name": "الأمن والسلامة",
+        "text": "التدريب على السلامة والاستجابة للطوارئ وفق الاشتراطات النظامية المحلية، في بيئة تحاكي موقع العمل، دون تعريض الأفراد أو المعدات للخطر.",
+        "points": [
+          "سيناريوهات السلامة والطوارئ",
+          "تسجيل كل قرار وتوقيته، وتحويله إلى تقرير واضح للمشرف",
+          "تحويل الحقائب التدريبية القائمة إلى تجارب تفاعلية"
+        ]
+      },
+      {
+        "name": "التعليم",
+        "text": "للمدارس والجامعات والجهات التعليمية: تجارب تعلم غامرة تكمل المنهج، وتستخدم داخل الفصل والمختبر، ويمكن للطالب الوصول إليها من جواله.",
+        "points": [
+          "دروس غامرة مبنية على المنهج",
+          "مختبرات ومحاكاة افتراضية آمنة",
+          "نماذج ثلاثية الأبعاد تستكشف من كل زاوية",
+          "تجارب واقع معزز داخل الفصل ومن الجوال"
+        ]
+      },
+      {
+        "name": "التدريب والتطوير المهني",
+        "text": "نطور لمراكز التدريب سيناريوهات ومحاكاة مخصصة تحول الحقيبة التدريبية إلى ممارسة عملية، ونقدم لفرقها برامج مهنية في تقنيات الواقع الممتد.",
+        "points": [
+          "تحويل الحقائب التدريبية القائمة إلى تجارب تفاعلية",
+          "التقييم الآلي وتقارير الأداء",
+          "البرامج المهنية وورش العمل التطبيقية"
+        ]
+      },
+      {
+        "name": "الثقافة والتراث",
+        "text": "نصمم تجارب زوار ومرشدين رقميين وأعمالا فنية تفاعلية، تروي قصة المكان وتجيب عن أسئلة زائره.",
+        "points": [
+          "تجارب الزوار والمعارض",
+          "المرشدون والشخصيات الرقمية",
+          "السرد المكاني والأعمال الفنية التفاعلية",
+          "تجارب الواقع المعزز من المتصفح دون تنزيل تطبيق"
+        ]
+      }
+    ],
+    "stack": {
+      "title": "منظومة تقنية تبنى وفق متطلبات التجربة",
+      "lead": "نوظف تقنيات الواقع الممتد والنمذجة ثلاثية الأبعاد والذكاء الاصطناعي وفق طبيعة الاستخدام، مع إمكانات لقياس الأداء عند الحاجة.",
+      "labels": [
+        "التقنيات الأساسية",
+        "قدرات مكملة"
+      ],
+      "core": [
+        {
+          "name": "الواقع المعزز",
+          "tag": "AR"
+        },
+        {
+          "name": "الواقع الافتراضي",
+          "tag": "VR"
+        },
+        {
+          "name": "الواقع المختلط",
+          "tag": "MR"
+        },
+        {
+          "name": "النمذجة ثلاثية الأبعاد",
+          "tag": "3D"
+        },
+        {
+          "name": "الذكاء الاصطناعي",
+          "tag": "AI"
+        }
+      ],
+      "support": [
+        "قياس الأداء",
+        "المحتوى التفاعلي",
+        "التكامل مع الأنظمة"
+      ]
+    },
+    "consult": {
+      "title": "الاستشارات والبرامج المهنية",
+      "text": "استشارات في الذكاء الاصطناعي يقدمها مختصون، وبرامج وورش عمل تطبيقية لفريقك في الذكاء الاصطناعي والواقع الممتد.",
+      "cta": "اعرف المزيد"
+    },
+    "about": {
+      "eyebrow": "من نحن",
+      "title": "شركة سعودية للتجارب الغامرة الذكية",
+      "lead": "AUTOXTION شركة سعودية مقرها الرياض، تصمم وتطور تجارب غامرة ذكية تجمع بين تقنيات الواقع الممتد والذكاء الاصطناعي، لدعم التدريب والتعلم والتفاعل.",
+      "text": "نعمل مع الجهات في قطاعات الصناعة والطاقة، والأمن والسلامة، والتعليم، والتدريب والتطوير المهني، والثقافة والتراث، ونحول إجراءاتها ومحتواها ومعرفتها إلى تجارب قابلة للممارسة."
+    },
+    "contact": {
+      "title": "تواصل معنا",
+      "lead": "لطلب جلسة عرض مدتها 30 دقيقة، أو لأي استفسار حول حلولنا.",
+      "labels": [
+        "الاسم الكامل",
+        "الجهة",
+        "البريد الإلكتروني",
+        "رقم الجوال",
+        "كيف يمكننا مساعدتك؟",
+        "ملاحظات (اختياري)"
+      ],
+      "purposes": [
+        "مناقشة مشروع",
+        "جلسة عرض لمشروع",
+        "برنامج لفريقي",
+        "استفسار عام",
+        "أخرى"
+      ],
+      "choose": "اختر…",
+      "send": "إرسال الطلب",
+      "aria": "بياناتك"
+    }
+  },
+  "en": {
+    "title": "AUTOXTION — Intelligent Immersive Experiences",
+    "description": "We design and develop intelligent immersive experiences with XR and AI for training, learning and engagement across industry and energy, training, education, and culture and heritage.",
+    "hero": {
+      "eyebrow": "Intelligent Immersive Experiences",
+      "h1": "We turn knowledge into experience",
+      "lead": "We design and develop intelligent immersive experiences that combine XR and AI to support training, learning and interaction.",
+      "cta": "Contact us",
+      "cta2": "Explore our solutions"
+    },
+    "ready": {
+      "title": "Building readiness through practice",
+      "text": "We develop immersive training and simulation environments that turn procedures and scenarios into applied practice, with capabilities for performance measurement and documented training outcomes.",
+      "cta": "Request a 30-minute demo",
+      "cta_purpose": "Project demo session",
+      "image": "feature-train",
+      "alt": "A trainee in a VR headset practising closing a valve in a simulated facility, while an instructor follows his performance on a tablet"
+    },
+    "solutions_title": "Our solutions",
+    "solutions": [
+      {
+        "slug": "training-simulation",
+        "image": "solution-training",
+        "alt": "A trainee in a mixed-reality headset working a virtual valve inside a training room",
+        "title": "Immersive Training & Simulation",
+        "text": "Simulation environments for operating procedures, equipment operation, and safety and emergency scenarios.",
+        "more": "Details"
+      },
+      {
+        "slug": "immersive-learning",
+        "image": "solution-learning",
+        "alt": "Students in an engineering lab exploring a 3D model of an engine",
+        "title": "Immersive Learning",
+        "text": "Learning experiences that turn educational content into 3D models, simulations and virtual labs.",
+        "more": "Details"
+      },
+      {
+        "slug": "interactive-xr",
+        "image": "solution-xr",
+        "alt": "A museum visitor pointing a tablet at an ancient clay vessel, with its digital model and details on the screen",
+        "title": "Interactive XR Experiences",
+        "text": "AR, VR and MR experiences that add interactive digital layers to places, content and physical objects.",
+        "more": "Details"
+      }
+    ],
+    "sectors_title": "Sectors",
+    "sectors_lead": "Solutions adapted to the requirements of different sectors.",
+    "sectors_image_alt": "The sectors AUTOXTION serves in one scene: an industrial plant, emergency training, a classroom and a heritage site",
+    "sectors": [
+      {
+        "name": "Industry & Energy",
+        "text": "Training in operating procedures, safety and emergency response, built on local regulatory requirements, inside a simulation of the site itself, without putting people or equipment at risk, and with a documented assessment of every trainee.",
+        "points": [
+          "Equipment operation and operating procedures",
+          "Safety and emergency scenarios, built on local regulatory requirements",
+          "Automated assessment and performance reports"
+        ]
+      },
+      {
+        "name": "Safety & Security",
+        "text": "Safety and emergency-response training based on local regulatory requirements, in a setting that mirrors the workplace, without exposing people or equipment to operational risk.",
+        "points": [
+          "Safety and emergency scenarios",
+          "Every decision and its timing recorded, and turned into a clear report for the supervisor",
+          "Converting existing training material into interactive experiences"
+        ]
+      },
+      {
+        "name": "Education",
+        "text": "For schools, universities and education authorities: immersive learning that complements the curriculum, works in the classroom and the lab, and can be accessed by students on their phones.",
+        "points": [
+          "Immersive lessons built on the curriculum",
+          "Safe virtual labs and simulations",
+          "3D models explored from every angle",
+          "AR experiences in the classroom and on the phone"
+        ]
+      },
+      {
+        "name": "Training & Professional Development",
+        "text": "For training centers, we develop custom scenarios and simulations that turn a training package into hands-on practice, and offer their teams professional XR programs.",
+        "points": [
+          "Converting existing training material into interactive experiences",
+          "Automated assessment and performance reports",
+          "Professional programs and hands-on workshops"
+        ]
+      },
+      {
+        "name": "Culture & Heritage",
+        "text": "We design visitor experiences, digital guides and interactive artworks that tell the story of a place and answer its visitors’ questions.",
+        "points": [
+          "Visitor and exhibition experiences",
+          "Digital guides and characters",
+          "Spatial storytelling and interactive artworks",
+          "Browser-based AR, with no app to install"
+        ]
+      }
+    ],
+    "stack": {
+      "title": "A technology stack shaped around the experience",
+      "lead": "We apply XR, 3D and AI according to the use case, with performance measurement capabilities where required.",
+      "labels": [
+        "Core technologies",
+        "Supporting capabilities"
+      ],
+      "core": [
+        {
+          "name": "Augmented Reality",
+          "tag": "AR"
+        },
+        {
+          "name": "Virtual Reality",
+          "tag": "VR"
+        },
+        {
+          "name": "Mixed Reality",
+          "tag": "MR"
+        },
+        {
+          "name": "3D Modelling",
+          "tag": "3D"
+        },
+        {
+          "name": "Artificial Intelligence",
+          "tag": "AI"
+        }
+      ],
+      "support": [
+        "Performance Measurement",
+        "Interactive Content",
+        "Systems Integration"
+      ]
+    },
+    "consult": {
+      "title": "Consulting & Professional Programs",
+      "text": "AI consulting from our specialists, plus applied programs and workshops for your team in AI and XR.",
+      "cta": "Learn more"
+    },
+    "about": {
+      "eyebrow": "About",
+      "title": "A Saudi company for intelligent immersive experiences",
+      "lead": "AUTOXTION is a Saudi company based in Riyadh. We design and develop intelligent immersive experiences that combine XR and AI to support training, learning and interaction.",
+      "text": "We work with organizations in industry and energy, safety and security, education, professional development, and culture and heritage, turning their procedures, content and knowledge into experiences people can practise."
+    },
+    "contact": {
+      "title": "Contact us",
+      "lead": "To request a 30-minute demo session, or for any enquiry about our solutions.",
+      "labels": [
+        "Full name",
+        "Organization",
+        "Email",
+        "Mobile number",
+        "How can we help?",
+        "Notes (optional)"
+      ],
+      "purposes": [
+        "Discuss a project",
+        "Project demo session",
+        "A program for my team",
+        "General inquiry",
+        "Other"
+      ],
+      "choose": "Choose…",
+      "send": "Send request",
+      "aria": "Your details"
+    }
+  }
+}

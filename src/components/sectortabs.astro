@@ -1,0 +1,65 @@
+---
+// The sectors as the earlier site showed them: numbered tabs that move on by themselves,
+// one picture, and the chosen sector's text with its points. site.ts runs the tabs.
+interface Props {
+  id?: string;
+  title: string;
+  lead: string;
+  imageAlt: string;
+  sectors: { name: string; text: string; points: string[] }[];
+}
+const { id, title, lead, imageAlt, sectors } = Astro.props;
+const src = (w: number) => `/assets/img/sectors-${w}.webp`;
+---
+
+<section id={id} class="py-20 scroll-mt-8">
+  <div class="max-w-(--breakpoint-xl) mx-auto px-5">
+    <div class="text-center">
+      <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">{title}</h2>
+      <p class="text-lg mt-4 text-slate-600">{lead}</p>
+    </div>
+    <div class="mt-12" data-tabs data-autoplay="6000">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6" role="tablist" aria-label={title}>
+        {sectors.map((s, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${i}`}
+            aria-controls={`panel-${i}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? undefined : -1}
+            class="tab relative overflow-hidden flex items-center gap-3 text-start p-3 rounded-lg border border-[#E2E2E2] bg-[#F5F5F5] font-semibold transition hover:bg-[#EBEBEB] aria-selected:bg-black aria-selected:text-white aria-selected:border-black">
+            <span class="grid place-items-center shrink-0 w-8 h-8 rounded-md border border-[#E2E2E2] bg-white text-sm text-black">{i + 1}</span>
+            <span class="leading-snug">{s.name}</span>
+            <span class="tab-bar absolute start-0 bottom-0 h-[3px] w-0 bg-white opacity-70" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      <div class="grid lg:grid-cols-[1.15fr_1fr] gap-12 items-center bg-[#F5F5F5] rounded-xl p-6 md:p-12">
+        <figure class="m-0">
+          <img
+            src={src(1000)}
+            srcset={[700, 1000, 1536].map((w) => `${src(w)} ${w}w`).join(", ")}
+            sizes="(max-width: 900px) 100vw, 55vw"
+            alt={imageAlt}
+            loading="lazy"
+            class="w-full h-auto block"
+          />
+        </figure>
+        <div class="grid" aria-live="polite">
+          {sectors.map((s, i) => (
+            <div class="tab-panel [grid-area:1/1]" role="tabpanel" id={`panel-${i}`} aria-labelledby={`tab-${i}`} hidden={i !== 0}>
+              <h3 class="text-3xl font-bold">{s.name}</h3>
+              <p class="text-lg mt-4 text-slate-600 leading-relaxed">{s.text}</p>
+              <ul class="grid gap-2 mt-6">
+                {s.points.map((p) => (
+                  <li class="relative ps-5 before:absolute before:start-0 before:top-[0.8em] before:w-2 before:h-0.5 before:bg-black">{p}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

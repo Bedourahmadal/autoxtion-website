@@ -1,0 +1,23 @@
+---
+// The professional programs as cards on the dark band: the tag on its own line, the title,
+// one sentence. The whole card leads to the request form with that program chosen.
+interface Props {
+  cards: { title: string; text: string; option: string; tag: string }[];
+}
+const { cards } = Astro.props;
+---
+
+<ul class="grid md:grid-cols-2 gap-6 mx-auto max-w-4xl mt-12">
+  {cards.map((c) => (
+    <li data-service={c.option}>
+      <a
+        href="#request"
+        data-open-form={c.option}
+        class="block h-full rounded-xl border border-white/15 bg-white/5 p-8 transition hover:bg-white/10 hover:border-white/40">
+        <span class="inline-block text-xs font-semibold tracking-widest text-white/80 border border-white/30 rounded-md px-2.5 py-1" dir="ltr">{c.tag}</span>
+        <h3 class="mt-5 text-2xl font-bold text-white">{c.title}</h3>
+        <p class="mt-3 text-white/65 leading-relaxed">{c.text}</p>
+      </a>
+    </li>
+  ))}
+</ul>

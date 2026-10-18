@@ -1,0 +1,73 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import Cta from "@/components/cta.astro";
+import { Icon } from "astro-icon/components";
+import { href, SOLUTION_SLUGS, type Lang } from "@/lib/i18n";
+import data from "@/data/solutions.json";
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: (typeof SOLUTION_SLUGS)[number] };
+const d = data[slug][lang];
+const img = (name: string) => `/assets/img/${name}-1000.webp`;
+const srcset = (name: string) => [700, 1000, 1536].map((w) => `/assets/img/${name}-${w}.webp ${w}w`).join(", ");
+const demo = href(lang, `?purpose=${encodeURIComponent(lang === "ar" ? "جلسة عرض لمشروع" : "Project demo session")}#contact`);
+---
+
+<Layout lang={lang} title={d.title} description={d.description}>
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">{d.h1}</Fragment>
+      <Fragment slot="desc">{d.lead}</Fragment>
+    </Sectionhead>
+
+    {d.hero && (
+      <div class="mx-auto max-w-4xl mt-12">
+        <img src={img(d.hero.image)} srcset={srcset(d.hero.image)} sizes="(max-width: 900px) 100vw, 896px" alt={d.hero.alt} class="w-full rounded-sm object-cover aspect-[3/2]" loading="eager" />
+      </div>
+    )}
+
+    <!-- what it includes: four points, each said once -->
+    <div class="mx-auto max-w-4xl mt-20">
+      <h2 class="text-3xl lg:text-4xl font-bold lg:tracking-tight">{d.includes_title}</h2>
+      <div class="grid sm:grid-cols-2 gap-x-12 gap-y-10 mt-10">
+        {d.items.map((item) => (
+          <div class="flex gap-4 items-start">
+            <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0">
+              <Icon class="text-white" name="bx:check" />
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg">{item.title}</h3>
+              <p class="text-slate-500 mt-1 leading-relaxed">{item.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {d.why && (
+      <div class="mx-auto max-w-4xl mt-20 border-s-[3px] border-black ps-6">
+        <h2 class="font-bold text-2xl lg:text-3xl text-gray-800">{d.why.title}</h2>
+        <p class="text-lg leading-relaxed text-slate-500 mt-3">{d.why.text}</p>
+      </div>
+    )}
+
+    <!-- technologies and who it is for, as two short rows -->
+    <div class="mx-auto max-w-4xl mt-20 grid sm:grid-cols-2 gap-10 border-t border-[#E2E2E2] pt-10">
+      <div>
+        <h2 class="text-sm font-semibold text-slate-500">{d.tech_title}</h2>
+        <ul class="flex flex-wrap gap-2 mt-3">
+          {d.tech.map((x) => <li class="border border-black rounded-full px-4 py-1.5">{x}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-sm font-semibold text-slate-500">{d.for_title}</h2>
+        <ul class="flex flex-wrap gap-2 mt-3">
+          {d.who.map((x) => <li class="bg-[#F5F5F5] rounded-full px-4 py-1.5">{x}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <Cta title={d.demo_title} text={d.demo_text} button={{ text: d.demo_cta, href: demo }} />
+  </Container>
+</Layout>

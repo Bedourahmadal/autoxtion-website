@@ -1,0 +1,39 @@
+---
+// The solutions as the earlier site showed them: three photo cards, each opening its page.
+interface Props {
+  id?: string;
+  title: string;
+  arrow: string;
+  cards: { href: string; image: string; alt: string; title: string; text: string; more: string }[];
+}
+const { id, title, arrow, cards } = Astro.props;
+const src = (name: string, w: number) => `/assets/img/${name}-${w}.webp`;
+---
+
+<section id={id} class="bg-[#F5F5F5] py-20 scroll-mt-8">
+  <div class="max-w-(--breakpoint-xl) mx-auto px-5">
+    <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">{title}</h2>
+    <div class="grid lg:grid-cols-3 gap-6 mt-12 max-w-2xl lg:max-w-none mx-auto">
+      {cards.map((c, i) => (
+        <article class="bg-white border border-[#E2E2E2] rounded-xl overflow-hidden flex flex-col">
+          <a href={c.href} tabindex="-1" aria-hidden="true" class="block aspect-[3/2] overflow-hidden">
+            <img
+              src={src(c.image, 1000)}
+              srcset={[700, 1000, 1536].map((w) => `${src(c.image, w)} ${w}w`).join(", ")}
+              sizes="(max-width: 1000px) 100vw, 33vw"
+              alt={c.alt}
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </a>
+          <div class="p-8 flex flex-col gap-4 flex-1">
+            <span class="text-sm font-semibold">0{i + 1}</span>
+            <h3 class="text-2xl font-bold">{c.title}</h3>
+            <p class="text-slate-600 leading-relaxed">{c.text}</p>
+            <a href={c.href} class="mt-auto pt-2 font-semibold inline-flex items-center gap-1.5 hover:underline">{c.more} <span aria-hidden="true">{arrow}</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

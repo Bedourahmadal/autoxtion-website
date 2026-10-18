@@ -1,0 +1,38 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  id?: string;
+  title: string;
+  lead?: string;
+  features: { title: string; description: string; icon: string; href?: string; more?: string }[];
+}
+const { id, title, lead, features } = Astro.props;
+---
+
+<div class="mt-16 md:mt-0 scroll-mt-8" id={id}>
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
+    {title}
+  </h2>
+  {lead && <p class="text-lg mt-4 text-slate-600">
+    {lead}
+  </p>}
+</div>
+
+<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
+  {
+    features.map((item) => (
+      <div class="flex gap-4 items-start">
+        <div class="mt-1 bg-black rounded-full  p-2 w-8 h-8 shrink-0">
+          <Icon class="text-white" name={item.icon} />
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">{item.href ? <a href={item.href} class="hover:underline">{item.title}</a> : item.title}</h3>{" "}
+          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
+          {item.href && item.more && <a href={item.href} class="inline-block mt-2 font-semibold text-black hover:underline">{item.more}</a>}
+        </div>
+      </div>
+    ))
+  }
+</div>

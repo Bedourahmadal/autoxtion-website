@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans:
+    Bricolage Grotesque Variable, Inter Variable, Inter, Alexandria Variable, ui-sans-serif,
+    system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+/*
+  Tailwind CSS v4 defaults buttons to the UA cursor; restore v3's pointer.
+*/
+@layer base {
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* AUTOXTION additions: Arabic reads better with more line height,
+   the phone request bar, and the request form's error lines. */
+html,
+body {
+  background: #fff;
+  color-scheme: light;
+}
+:lang(ar) body {
+  line-height: 1.8;
+}
+:lang(ar) h1,
+:lang(ar) h2 {
+  line-height: 1.35;
+}
+.field-error {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-red-400);
+}
+[aria-invalid="true"] {
+  border-color: #dc3545 !important;
+}
+.is-selected {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+@media (max-width: 639px) {
+  body[data-show-sticky] .whatsapp-float {
+    bottom: 5.25rem;
+  }
+}
+
+/* sector tabs (as on the earlier site): the chosen tab's line fills while it waits to move on */
+.tab-panel[hidden] {
+  display: block;
+  visibility: hidden;
+}
+.tab-panel:not([hidden]) {
+  animation: panelin 320ms ease;
+}
+[data-tabs][data-running] .tab[aria-selected="true"] .tab-bar {
+  animation: tabfill var(--tab-dur, 6000ms) linear forwards;
+}
+@keyframes tabfill {
+  to {
+    width: 100%;
+  }
+}
+@keyframes panelin {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tab-panel:not([hidden]) {
+    animation: none;
+  }
+}
+
+/* the hero background, shared by the homepage hero, the consulting hero and the programs band */
+.hero-dots {
+  background: linear-gradient(160deg, #050506 0%, #141516 40%, #3a3c40 100%);
+}
+/* light dots over the gradient, fading out towards the edges */
+.hero-dots::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 85%);
+  pointer-events: none;
+}

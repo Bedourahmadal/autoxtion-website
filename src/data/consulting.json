@@ -1,0 +1,286 @@
+{
+  "ar": {
+    "title": "استشارات الذكاء الاصطناعي | AUTOXTION",
+    "desc": "استكشف استشارات AUTOXTION في الذكاء الاصطناعي، من تقييم الجاهزية وتدريب الفرق إلى التخطيط للمشاريع وتقديم التوجيه المتخصص.",
+    "h1": "استشارات الذكاء الاصطناعي",
+    "lead": "نساعدك تعرف من أين تبدأ مع الذكاء الاصطناعي، بخطوات واضحة.",
+    "cta": "اطلب استشارتك",
+    "offer_h": "اختر استشارتك",
+    "items": [
+      [
+        "استشارة متخصصة",
+        "جلسة مع مختص حول سؤال أو تحدٍ محدد، تخرج منها بخطوات واضحة.",
+        "استفسر عن الاستشارة",
+        [
+          "ساعة واحدة",
+          "عبر الفيديو",
+          "مع مختص"
+        ]
+      ],
+      [
+        "تقييم جاهزية الذكاء الاصطناعي",
+        "نحدد أين يضيف الذكاء الاصطناعي قيمة في عملك.",
+        "اطلب التقييم",
+        null
+      ],
+      [
+        "تدريب الفرق على الذكاء الاصطناعي",
+        "ورشة عملية لفريقك على أدوات الذكاء الاصطناعي.",
+        "اطلب تدريب فريقك",
+        null
+      ],
+      [
+        "خطة تنفيذ مشروع ذكاء اصطناعي",
+        "نحوّل فكرتك إلى خطة: النطاق والأدوات والمراحل.",
+        "ناقش مشروعك",
+        null
+      ]
+    ],
+    "prog_h": "البرامج المهنية",
+    "prog_lead": "ورش عمل تطبيقية لفريقك.",
+    "prog_cta": "اطلب برنامجًا",
+    "progs": [
+      [
+        "برامج الذكاء الاصطناعي",
+        "AI",
+        "ورش عمل تطبيقية في الذكاء الاصطناعي وأدواته واستخداماته في العمل.",
+        "برنامج مهني في الذكاء الاصطناعي"
+      ],
+      [
+        "برامج الواقع الممتد",
+        "XR",
+        "ورش عمل تطبيقية في تطوير تجارب الواقع المعزز والافتراضي والمختلط.",
+        "برنامج مهني في الواقع الممتد"
+      ]
+    ],
+    "unsure": "لست متأكدًا بعد",
+    "how_h": "كيف تتم الاستشارة",
+    "more": "عرض التفاصيل",
+    "less": "إخفاء التفاصيل",
+    "steps": [
+      [
+        "أرسل طلبك",
+        "حدد الاستشارة واحتياجك."
+      ],
+      [
+        "نبدأ بالتواصل",
+        "نتفق معك على الموعد والتكلفة."
+      ]
+    ],
+    "form_h": "اطلب استشارتك",
+    "form_lead": "أخبرنا باحتياجك ونتواصل معك.",
+    "aria": "طلب استشارة",
+    "name": "الاسم الكامل",
+    "company": "الجهة أو الشركة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الجوال",
+    "cc": "رمز الدولة",
+    "type_l": "نوع الاستشارة",
+    "choose": "اختر…",
+    "notes": "ما الذي تحتاج إلى المساعدة فيه؟",
+    "ph": "صف احتياجك أو التحدي الذي ترغب في مناقشته.",
+    "optional": "(اختياري)",
+    "send": "إرسال الطلب",
+    "ok": "تم إرسال طلبك بنجاح. سنتواصل معك لمناقشة التفاصيل.",
+    "err": "تعذر إرسال طلبك. يرجى المحاولة مرة أخرى.",
+    "team_h": "المستشارون",
+    "team_lead": "مختصون بخبرة عملية في الذكاء الاصطناعي والواقع الممتد.",
+    "slot_date": "التاريخ المفضل",
+    "slot_time": "الوقت المفضل",
+    "slot_first": "اختر التاريخ أولًا",
+    "slot_choose": "اختر الوقت",
+    "slot_closed": "لا تتوفر مواعيد في هذا اليوم، اختر يومًا آخر",
+    "slot_pick_time": "اختر الوقت المناسب",
+    "slot_note": "مواعيد شروق: من الأحد إلى الخميس من 7 إلى 11 مساءً، والسبت من 12 ظهرًا إلى 11 مساءً. نؤكد الموعد النهائي معك عند التواصل.",
+    "pref": "المستشار المفضل",
+    "no_pref": "بدون تفضيل",
+    "with_": "اطلب استشارة مع",
+    "creds_l": "المؤهلات والشهادات",
+    "tags_l": "مجالات الخبرة",
+    "people": [
+      {
+        "name": "شروق الدلبحي",
+        "role": "مهندسة أنظمة ذكاء اصطناعي",
+        "lead": true,
+        "bio": [
+          "تطوّر أنظمة الوكلاء الذكية وحلول النماذج اللغوية الكبيرة، وتقدّم التدريب والإرشاد المهني في الذكاء الاصطناعي."
+        ],
+        "creds": [
+          "ماجستير في الذكاء الاصطناعي",
+          "NVIDIA-Certified Associate: Generative AI LLMs",
+          "NVIDIA-Certified Associate: Generative AI Multimodal",
+          "Agile Scrum Master"
+        ],
+        "tags": [
+          "أنظمة الوكلاء الذكية",
+          "النماذج اللغوية الكبيرة (LLMs)",
+          "RAG",
+          "الإرشاد المهني"
+        ]
+      },
+      {
+        "name": "بدور العياد",
+        "role": "مهندسة تقنيات الواقع الممتد",
+        "bio": [
+          "تبني تطبيقات غامرة بالواقع المختلط والافتراضي والمعزّز، وتدمج الذكاء الاصطناعي ورؤية الحاسب في تجارب للتدريب والتعليم والصناعة."
+        ],
+        "creds": [
+          "ماجستير في الذكاء الاصطناعي",
+          "حاصلة على معسكر تدريبي مكثف في تقنيات الواقع الممتد"
+        ],
+        "tags": [
+          "الواقع المختلط (MR)",
+          "الواقع الافتراضي (VR)",
+          "الحوسبة المكانية",
+          "Unity"
+        ]
+      }
+    ],
+    "req": "هذا الحقل مطلوب",
+    "bad_email": "أدخل بريدًا إلكترونيًا صحيحًا، مثل name@company.com",
+    "pick": "اختر نوع الاستشارة"
+  },
+  "en": {
+    "title": "AI Consulting | AUTOXTION",
+    "desc": "Explore AUTOXTION's AI consulting services, including readiness assessments, team training, expert guidance, and AI project planning.",
+    "h1": "AI Consulting",
+    "lead": "We help you see where to start with AI, in clear steps.",
+    "cta": "Request a Consultation",
+    "offer_h": "Choose Your Consultation",
+    "items": [
+      [
+        "One-Hour Advisory Session",
+        "A session with a specialist on a specific question or challenge, ending with clear next steps.",
+        "Request a Session",
+        [
+          "One hour",
+          "Video call",
+          "With a specialist"
+        ]
+      ],
+      [
+        "AI Readiness Assessment",
+        "We find where AI adds value in your work.",
+        "Request an Assessment",
+        null
+      ],
+      [
+        "AI Team Training",
+        "A hands-on workshop on AI tools for your team.",
+        "Request Team Training",
+        null
+      ],
+      [
+        "AI Project Implementation Plan",
+        "We turn your idea into a plan: scope, tools and phases.",
+        "Discuss Your Project",
+        null
+      ]
+    ],
+    "prog_h": "Professional Programs",
+    "prog_lead": "Applied workshops for your team.",
+    "prog_cta": "Request a Program",
+    "progs": [
+      [
+        "AI Programs",
+        "AI",
+        "Hands-on workshops in AI, its tools and how to use them at work.",
+        "Professional program in AI"
+      ],
+      [
+        "XR Programs",
+        "XR",
+        "Hands-on workshops in building AR, VR and mixed-reality experiences.",
+        "Professional program in XR"
+      ]
+    ],
+    "unsure": "Not Sure Yet",
+    "how_h": "How It Works",
+    "more": "Show details",
+    "less": "Hide details",
+    "steps": [
+      [
+        "Send Your Request",
+        "Choose a consultation and tell us what you need."
+      ],
+      [
+        "We Get in Touch",
+        "We'll agree the time and cost with you."
+      ]
+    ],
+    "form_h": "Request a Consultation",
+    "form_lead": "Tell us what you need and we'll get in touch.",
+    "aria": "Consultation request",
+    "name": "Full Name",
+    "company": "Organization",
+    "email": "Email Address",
+    "phone": "Mobile Number",
+    "cc": "Country code",
+    "type_l": "Consultation Type",
+    "choose": "Choose…",
+    "notes": "What do you need help with?",
+    "ph": "Briefly describe your needs or the challenge you'd like to discuss.",
+    "optional": "(optional)",
+    "send": "Submit Request",
+    "ok": "Your request has been submitted successfully. We'll contact you to discuss the details.",
+    "err": "We couldn't submit your request. Please try again.",
+    "team_h": "Our Consultants",
+    "team_lead": "Specialists with hands-on experience in AI and extended reality.",
+    "slot_date": "Preferred date",
+    "slot_time": "Preferred time",
+    "slot_first": "Choose a date first",
+    "slot_choose": "Choose a time",
+    "slot_closed": "No times are available on this day. Please choose another day.",
+    "slot_pick_time": "Choose a suitable time",
+    "slot_note": "Shrouq's hours: Sunday to Thursday, 7 to 11 pm, and Saturday, 12 noon to 11 pm. We'll confirm the final time with you when we get in touch.",
+    "pref": "Preferred consultant",
+    "no_pref": "No preference",
+    "with_": "Request a consultation with",
+    "creds_l": "Qualifications and certifications",
+    "tags_l": "Areas of expertise",
+    "people": [
+      {
+        "name": "Shrouq Aldalbahi",
+        "short": "Shrouq",
+        "role": "AI Systems Engineer",
+        "lead": true,
+        "bio": [
+          "Builds agentic AI systems and LLM solutions, and offers AI training and career guidance."
+        ],
+        "creds": [
+          "Master's degree in Artificial Intelligence",
+          "NVIDIA-Certified Associate: Generative AI LLMs",
+          "NVIDIA-Certified Associate: Generative AI Multimodal",
+          "Agile Scrum Master"
+        ],
+        "tags": [
+          "Agentic AI systems",
+          "Large language models (LLMs)",
+          "RAG",
+          "Career guidance"
+        ]
+      },
+      {
+        "name": "Bedour Alayyad",
+        "short": "Bedour",
+        "role": "Extended Reality (XR) Engineer",
+        "bio": [
+          "Builds immersive MR, VR and AR applications, bringing in AI and computer vision for training, education and industry."
+        ],
+        "creds": [
+          "Master's degree in Artificial Intelligence",
+          "Completed an intensive bootcamp in extended reality (XR) technologies"
+        ],
+        "tags": [
+          "Mixed reality (MR)",
+          "Virtual reality (VR)",
+          "Spatial computing",
+          "Unity"
+        ]
+      }
+    ],
+    "req": "This field is required",
+    "bad_email": "Enter a valid email address, such as name@company.com",
+    "pick": "Choose a consultation type"
+  }
+}

@@ -1,0 +1,40 @@
+---
+// The template's pricing card. We show no prices, so the big line carries the service name.
+import { Tick } from "@/components/ui/icons";
+
+const { plan } = Astro.props;
+---
+
+<div data-service={plan.service}>
+  <div
+    class="flex flex-col w-full h-full order-first lg:order-none border-2 border-[#D8DEE9] border-opacity-50 py-5 px-6 rounded-md">
+    <div class="text-center">
+      <h4 class="text-lg font-medium text-gray-400"><bdi>{plan.name}</bdi></h4><p
+        class="mt-3 text-2xl font-bold text-black md:text-3xl">
+        {plan.price}
+      </p>
+    </div><ul class="grid mt-8 text-start gap-y-4">
+      {
+        plan.features.map((item) => (
+          <li class="flex items-start gap-3 text-gray-800">
+            <Tick class="w-6 h-6 shrink-0" />
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul><div class="flex mt-auto pt-8">
+      <a
+        href={plan.button.link || "#"}
+        data-open-form={plan.button.form}
+        data-consultant={plan.button.consultant}
+        class:list={[
+          "rounded-sm text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 w-full",
+          plan.popular
+            ? "bg-black text-white hover:bg-gray-800  border-2 border-transparent"
+            : "bg-white border-2 border-black hover:bg-gray-100 text-black ",
+        ]}>
+        {plan.button.text}
+      </a>
+    </div>
+  </div>
+</div>

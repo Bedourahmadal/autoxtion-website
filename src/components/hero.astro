@@ -1,0 +1,47 @@
+---
+// The homepage hero: no photo. A black-to-grey gradient with a light dot pattern,
+// the headline in the middle, the two buttons, and the core technologies as tags.
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead: string;
+  primary: { text: string; href: string };
+  secondary?: { text: string; href: string };
+  tags?: { tag: string; name: string }[];
+}
+const { eyebrow, title, lead, primary, secondary, tags = [] } = Astro.props;
+---
+
+<section class="hero-dots relative overflow-hidden text-white" data-hero>
+  <div class="relative max-w-(--breakpoint-xl) mx-auto px-5 py-20 md:py-24 xl:py-32 text-center">
+    {eyebrow && <p class="text-sm font-semibold tracking-wide text-white/60">{eyebrow}</p>}
+    <h1 class="mt-4 text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+      {title}
+    </h1>
+    <p class="text-lg md:text-xl mt-5 text-white/70 max-w-2xl mx-auto leading-relaxed">
+      {lead}
+    </p>
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+      <a href={primary.href} class="flex gap-1.5 items-center justify-center rounded-sm px-6 py-3 bg-white text-black border-2 border-transparent hover:bg-gray-200 transition focus-visible:ring-2 ring-offset-2 ring-white/40">
+        <Icon class="w-5 h-5" name="bx:bxs-chat" />
+        {primary.text}
+      </a>
+      {secondary && (
+        <a href={secondary.href} class="flex gap-1.5 items-center justify-center rounded-sm px-6 py-3 border-2 border-white/40 text-white hover:bg-white/10 hover:border-white transition focus-visible:ring-2 ring-offset-2 ring-white/40">
+          <Icon class="w-4 h-4" name="bx:bxs-grid-alt" />
+          {secondary.text}
+        </a>
+      )}
+    </div>
+    {tags.length > 0 && (
+      <ul class="mt-12 flex flex-wrap justify-center gap-2.5" dir="ltr">
+        {tags.map((t) => (
+          <li title={t.name} class="rounded-full border border-white/30 bg-white/5 px-4 py-1.5 text-sm font-semibold tracking-wider text-white/85">{t.tag}</li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+

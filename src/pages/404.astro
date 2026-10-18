@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import Link from "@/components/ui/link.astro";
+---
+
+<Layout lang="ar" title="404 | AUTOXTION" description="الصفحة غير موجودة">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">404</Fragment>
+      <Fragment slot="desc">الصفحة غير موجودة · Page not found</Fragment>
+    </Sectionhead>
+    <div class="flex justify-center gap-3 mt-8">
+      <Link href="/">الرئيسية</Link>
+      <Link href="/en/" style="outline">Home</Link>
+    </div>
+  </Container>
+</Layout>

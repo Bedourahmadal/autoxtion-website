@@ -1,0 +1,46 @@
+---
+// The footer the earlier site had: the logo with a line about the company, then the solutions,
+// the company links and the contact details, and the rights line underneath.
+import { UI, CONTACT, href, SOLUTION_SLUGS, type Lang } from "@/lib/i18n";
+const { lang } = Astro.props as { lang: Lang };
+const t = UI[lang];
+const link = "text-[#4A4A4A] hover:text-black";
+---
+
+<footer class="mt-24 bg-[#F5F5F5] border-t border-[#E2E2E2] pt-16 pb-8 text-[0.95rem]">
+  <div class="max-w-(--breakpoint-xl) mx-auto px-5">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8">
+      <div>
+        <img src="/assets/brand/autoxtion-logo.svg" alt="AUTOXTION" width="189" height="18" class="h-4 w-auto" loading="lazy" />
+        <p class="mt-4 max-w-xs text-[#4A4A4A] leading-relaxed">{t.blurb}</p>
+      </div>
+      <div>
+        <h2 class="font-semibold mb-4">{t.solutions}</h2>
+        <ul class="grid gap-2.5">
+          {SOLUTION_SLUGS.map((slug) => <li><a class={link} href={href(lang, `solutions/${slug}/`)}>{t.solutionNames[slug]}</a></li>)}
+          <li><a class={link} href={href(lang, "consulting/")}>{t.consulting}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-semibold mb-4">{t.company}</h2>
+        <ul class="grid gap-2.5">
+          <li><a class={link} href={href(lang, "#sectors")}>{t.sectors}</a></li>
+          <li><a class={link} href={href(lang, "about/")}>{t.about}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-semibold mb-4">{t.reach}</h2>
+        <ul class="grid gap-2.5 text-[#4A4A4A]">
+          <li><a class={link} href={`mailto:${CONTACT.email}`} dir="ltr">{CONTACT.email}</a></li>
+          {CONTACT.phones.map((p) => <li><a class={link} href={`tel:${p.replace(/\s/g, "")}`} dir="ltr">{p}</a></li>)}
+          <li>{t.city}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 pt-6 border-t border-[#E2E2E2] flex flex-wrap justify-between gap-4 text-sm text-[#666]">
+      <span>{t.rights} <span dir="ltr">© {new Date().getFullYear()} AUTOXTION</span></span>
+      <!-- The template's author asks to keep this credit, or to buy a commercial licence from https://web3templates.com -->
+      <span class="text-xs">Made by <a href="https://web3templates.com" target="_blank" rel="noopener" class="hover:underline">Web3Templates</a></span>
+    </div>
+  </div>
+</footer>

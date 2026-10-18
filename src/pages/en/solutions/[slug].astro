@@ -1,0 +1,9 @@
+---
+import View from "@/views/Solution.astro";
+import { SOLUTION_SLUGS } from "@/lib/i18n";
+
+export const getStaticPaths = () => SOLUTION_SLUGS.map((slug) => ({ params: { slug } }));
+const { slug } = Astro.params as { slug: (typeof SOLUTION_SLUGS)[number] };
+---
+
+<View lang="en" slug={slug} />
